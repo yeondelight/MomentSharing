@@ -31,7 +31,7 @@ class AlbumDetailViewController: UIViewController {
         super.viewDidLoad()
         emotionPickerView.dataSource = self
         emotionPickerView.delegate = self
-        emotionIndex = emotionGroup.getEmotionIndex(key: emotionIdentifier)
+        emotionIndex = emotionGroup.getEmotionIndex(key: emotionIdentifier) ?? 2
         emotionPickerView.selectRow(emotionIndex, inComponent: 0, animated: true)
     }
     

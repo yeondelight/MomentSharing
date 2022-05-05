@@ -10,8 +10,7 @@ import Photos
 import PhotosUI
 
 
-class PlanDetailViewController: UIViewController {
-
+class PlanDetailViewController: UIViewController{
 
     @IBOutlet weak var planName: UITextField!
     @IBOutlet weak var dateDatePicker: UIDatePicker!
@@ -77,9 +76,7 @@ class PlanDetailViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    // local album에서 사진 가져와 저장
-    @IBAction func addPhoto(_ sender: UIButton) {
-    }
+
 }
 
 // for album
@@ -117,7 +114,6 @@ extension PlanDetailViewController: UICollectionViewDelegate, UICollectionViewDa
 extension PlanDetailViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("pppppppppppppppppppp")
         let albumDetailViewController = segue.destination as! AlbumDetailViewController
 
         // 이미지에 대한 정보를 가져온다
@@ -132,5 +128,42 @@ extension PlanDetailViewController {
             // 한참있다가 실행된다. 즉, albumDetailViewController가 로딩되고 appear한 후에 나타난다.
             albumDetailViewController.image = image  // 앞에서 didSet을 사용한 이유이다.
         })
+    }
+}
+
+// for save btn
+extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
+    // local album에서 사진 가져와 저장
+    @IBAction func addPhoto(_ sender: UIButton) {
+        let pickerViewController = UIImagePickerController()
+        pickerViewController.sourceType = .photoLibrary
+        pickerViewController.delegate = self
+        present(pickerViewController, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // 이미지를 가져온다
+        let image = info[UIImagePickerController.InfoKey.originalImage] as! UIImage
+        picker.dismiss(animated: true, completion: nil)
+
+        // 앨범에 저장을 요청하면서 저장 완료에 대한 handler를 제공한다
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(afterSaveImage), nil)
+    }
+    
+    @objc func afterSaveImage(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+
+        // 새로운 사진을 포함하여 모든 사진의 메타 데이터를 가져온다
+        let allPhotosOptions = PHFetchOptions()
+        allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        fetchResult = PHAsset.fetchAssets(with: allPhotosOptions)
+
+        // 새로운 사진은 맨처음에 존재한다. 왜냐하면 생성날자순으로 정렬하였기 때문에
+        let indexPath = IndexPath(row: 0, section: 0)  // 첫 사진에 대한 indexPath 설정
+        performSegue(withIdentifier: "ShowDetail", sender: indexPath) // 그러면 prepare가 호출 될 것이다.
     }
 }
