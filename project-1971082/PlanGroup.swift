@@ -17,7 +17,7 @@ class PlanGroup: NSObject{
     init(parentNotification: ((Plan?, DbAction?) -> Void)? ){
         super.init()
         self.parentNotification = parentNotification
-        database = DbMemory(parentNotification: receivingNotification) // 데이터베이스 생성
+        database = DbFirebase(parentNotification: receivingNotification) // 데이터베이스 생성
     }
     func receivingNotification(plan: Plan?, action: DbAction?){
         // 데이터베이스로부터 메시지를 받고 이를 부모에게 전달한다

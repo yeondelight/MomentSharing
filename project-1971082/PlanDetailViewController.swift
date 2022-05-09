@@ -8,7 +8,7 @@
 import UIKit
 import Photos
 import PhotosUI
-
+import Firebase
 
 class PlanDetailViewController: UIViewController{
 
@@ -56,6 +56,8 @@ class PlanDetailViewController: UIViewController{
         // https://developer.apple.com/documentation/photokit/browsing_and_modifying_photo_albums 참조
         
         // firebase에서 해당 plan에 해당하는 album group을 가져온다.
+        // Firestore.firestore().collection("plans").document("key").getDocument(source: <#T##FirestoreSource#>, completion: <#T##(DocumentSnapshot?, Error?) -> Void#>)
+
         let allPhotosOptions = PHFetchOptions()
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchResult = PHAsset.fetchAssets(with: allPhotosOptions) // 모든 사진의 목록을 갖는다

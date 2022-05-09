@@ -299,11 +299,19 @@
                                 <rect key="frame" x="8" y="96" width="398" height="758"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="45h-q5-g2Z">
-                                        <rect key="frame" x="0.0" y="0.0" width="398" height="561"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="398" height="530.5"/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pbz-Wl-lus">
-                                        <rect key="frame" x="0.0" y="571" width="398" height="187"/>
+                                        <rect key="frame" x="0.0" y="540.5" width="398" height="176.5"/>
                                     </pickerView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAZ-br-i0t">
+                                        <rect key="frame" x="0.0" y="727" width="398" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="save"/>
+                                        <connections>
+                                            <action selector="saveImageEmotion:" destination="4wX-1x-vSp" eventType="touchUpInside" id="fXs-Gr-ao8"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="45h-q5-g2Z" firstAttribute="height" secondItem="pbz-Wl-lus" secondAttribute="height" multiplier="3" id="y74-E4-jPy"/>

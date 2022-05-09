@@ -6,13 +6,15 @@
 //
 
 import Foundation
+import UIKit
 
-class Plan: NSObject /*, NS Coding*/{
+class Plan: NSObject, NSCoding{
     var key: String
     var date: Date
     var owner: String?
     var name: String?
     var content: String?
+    var album: [UIImage:String]
     
     init(date: Date, owner: String?, name: String?, content: String){
         self.key=UUID().uuidString
@@ -20,16 +22,37 @@ class Plan: NSObject /*, NS Coding*/{
         self.owner = Owner.getOwner()
         self.name = name
         self.content = content
+        self.album = [:]
         super.init()
     }
     
+    // archiving할때 호출된다
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(key, forKey: "key")       // 내부적으로 String의 encode가 호출된다
+        aCoder.encode(date, forKey: "date")
+        aCoder.encode(owner, forKey: "owner")
+        aCoder.encode(name, forKey: "name")
+        aCoder.encode(content, forKey: "content")
+        aCoder.encode(album, forKey: "album")
+    }
+    
+    // unarchiving할때 호출된다
+    required init(coder aDecoder: NSCoder) {
+        key = aDecoder.decodeObject(forKey: "key") as! String? ?? "" // 내부적으로 String.init가 호출된다
+        date = aDecoder.decodeObject(forKey: "date") as! Date
+        owner = aDecoder.decodeObject(forKey: "owner") as? String
+        name = aDecoder.decodeObject(forKey: "name") as? String
+        content = aDecoder.decodeObject(forKey: "content") as! String? ?? ""
+        album = aDecoder.decodeObject(forKey: "album") as! [UIImage:String]? ?? [:]
+        super.init()
+    }
 }
 
 extension Plan{
     convenience init(date:Date? = nil, withData: Bool = false){
         self.init(date:date ?? Date(), owner: "me", name: "New Album", content:"shared album with plan")
     }
-
+    
     func clone() -> Plan {
         let clonee = Plan()
 
@@ -38,6 +61,7 @@ extension Plan{
         clonee.owner = self.owner
         clonee.name = self.name   // enum도 struct처럼 복제가 된다
         clonee.content = self.content
+        clonee.album = self.album
         return clonee
     }
 }

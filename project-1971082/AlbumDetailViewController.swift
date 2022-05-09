@@ -35,9 +35,10 @@ class AlbumDetailViewController: UIViewController {
         emotionPickerView.selectRow(emotionIndex, inComponent: 0, animated: true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    @IBAction func saveImageEmotion(_ sender: UIButton) {
         emotionGroup.emotions[emotionIdentifier] = emotionPickerView.selectedRow(inComponent: 0)
         emotionGroup.saveEmotionGroup()
+        navigationController?.popViewController(animated: true)
     }
 }
 

@@ -24,6 +24,7 @@
 		E0A80F43282283800088F482 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A80F42282283800088F482 /* AlbumDetailViewController.swift */; };
 		E0A80F45282284220088F482 /* EmotionGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A80F44282284220088F482 /* EmotionGroup.swift */; };
 		E0AD067C28224AD2007C8365 /* apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0AD067B28224AD2007C8365 /* apple.jpg */; };
+		E0F972C828292A540028B47F /* DbFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F972C728292A540028B47F /* DbFirebase.swift */; };
 		E0FEC71A281A336200C9F042 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */; };
 		E0FEC71C281A87CA00C9F042 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FEC71B281A87CA00C9F042 /* Owner.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		E0A80F42282283800088F482 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
 		E0A80F44282284220088F482 /* EmotionGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmotionGroup.swift; sourceTree = "<group>"; };
 		E0AD067B28224AD2007C8365 /* apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = apple.jpg; sourceTree = "<group>"; };
+		E0F972C728292A540028B47F /* DbFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFirebase.swift; sourceTree = "<group>"; };
 		E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
 		E0FEC71B281A87CA00C9F042 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		FFC632C909B3B7C3259E3F04 /* Pods-project-1971082.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-1971082.release.xcconfig"; path = "Target Support Files/Pods-project-1971082/Pods-project-1971082.release.xcconfig"; sourceTree = "<group>"; };
@@ -80,7 +82,6 @@
 				44E271CDEC287197A5A680EE /* Pods-project-1971082.debug.xcconfig */,
 				FFC632C909B3B7C3259E3F04 /* Pods-project-1971082.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -111,6 +112,7 @@
 				E0FEC71B281A87CA00C9F042 /* Owner.swift */,
 				E07D55E62810058A0049386F /* PlanGroup.swift */,
 				E07D55EA2810084E0049386F /* Database.swift */,
+				E0F972C728292A540028B47F /* DbFirebase.swift */,
 				E07D55EC281008C40049386F /* DbMemory.swift */,
 				E07D55E8281006280049386F /* Plan.swift */,
 				E07D55D8281004910049386F /* Main.storyboard */,
@@ -249,6 +251,7 @@
 				E0A80F41282281CC0088F482 /* ImageCollectionViewCell.swift in Sources */,
 				E07D55D7281004910049386F /* PlanGroupViewController.swift in Sources */,
 				E07D55E9281006280049386F /* Plan.swift in Sources */,
+				E0F972C828292A540028B47F /* DbFirebase.swift in Sources */,
 				E0FEC71C281A87CA00C9F042 /* Owner.swift in Sources */,
 				E0A80F43282283800088F482 /* AlbumDetailViewController.swift in Sources */,
 				E07D55ED281008C40049386F /* DbMemory.swift in Sources */,
