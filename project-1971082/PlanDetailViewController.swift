@@ -30,6 +30,8 @@ class PlanDetailViewController: UIViewController{
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        // firebase에서 모든 plan을 가져온다.
+        // group을 배열에 저장해둬야할듯
         plan = plan ?? Plan(date: Date(), withData: true)
         planName.text = plan?.name
         dateDatePicker.date = plan?.date ?? Date()
@@ -52,6 +54,8 @@ class PlanDetailViewController: UIViewController{
     override func viewDidAppear(_ animated: Bool) {
         // 모든 사진을 다 가져온다. 일부사진만 가져오는 것은
         // https://developer.apple.com/documentation/photokit/browsing_and_modifying_photo_albums 참조
+        
+        // firebase에서 해당 plan에 해당하는 album group을 가져온다.
         let allPhotosOptions = PHFetchOptions()
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         fetchResult = PHAsset.fetchAssets(with: allPhotosOptions) // 모든 사진의 목록을 갖는다
