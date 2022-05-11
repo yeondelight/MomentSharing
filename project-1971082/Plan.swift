@@ -5,6 +5,7 @@
 //  Created by 김다연 on 2022/04/20.
 //
 
+import FirebaseStorage
 import Foundation
 import UIKit
 
@@ -14,7 +15,7 @@ class Plan: NSObject, NSCoding{
     var owner: String?
     var name: String?
     var content: String?
-    var album: [UIImage:String]
+    var album: [FirebaseStorage.StorageReference: Int]
     
     init(date: Date, owner: String?, name: String?, content: String){
         self.key=UUID().uuidString
@@ -43,7 +44,7 @@ class Plan: NSObject, NSCoding{
         owner = aDecoder.decodeObject(forKey: "owner") as? String
         name = aDecoder.decodeObject(forKey: "name") as? String
         content = aDecoder.decodeObject(forKey: "content") as! String? ?? ""
-        album = aDecoder.decodeObject(forKey: "album") as! [UIImage:String]? ?? [:]
+        album = aDecoder.decodeObject(forKey: "album") as! [FirebaseStorage.StorageReference: Int]? ?? [:]
         super.init()
     }
 }

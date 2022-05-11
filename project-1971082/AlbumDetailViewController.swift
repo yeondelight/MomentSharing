@@ -15,12 +15,10 @@ class AlbumDetailViewController: UIViewController {
     
     var emotionLists = ["😫", "☹️", "😐", "😊", "🥰"]
     
-    var image: UIImage? { // 이미지 객체를 전달받는 변수임
-        didSet {     // image값이 변경되면 항상 함수 didSet가 호출된다
-            if let imageView = imageView{  // imageView가 만들어지기 전에 호출 될수도 있다
-                imageView.image = image
-            }
-        }
+    var image: UIImage?
+    
+    func setImage(img: UIImage) {
+        image = img
     }
 
     var emotionIdentifier: String!      // 이미지 식별자를 전달 받음
@@ -29,9 +27,11 @@ class AlbumDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageView.image = image
         emotionPickerView.dataSource = self
         emotionPickerView.delegate = self
-        emotionIndex = emotionGroup.getEmotionIndex(key: emotionIdentifier) ?? 2
+        emotionIndex = 2
+        //emotionIndex = emotionGroup.getEmotionIndex(key: emotionIdentifier) ?? 2
         emotionPickerView.selectRow(emotionIndex, inComponent: 0, animated: true)
     }
     

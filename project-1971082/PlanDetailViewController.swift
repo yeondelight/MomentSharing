@@ -6,9 +6,11 @@
 //
 
 import UIKit
+
 import Photos
 import PhotosUI
 import Firebase
+import FirebaseStorage
 
 class PlanDetailViewController: UIViewController{
 
@@ -22,13 +24,17 @@ class PlanDetailViewController: UIViewController{
     var plan: Plan? // 나중에 PlanGroupViewController로부터 데이터를 전달받는다
     var saveChangeDelegate: ((Plan)-> Void)?
     
+    var storage = Storage.storage()
+    var imgList: [UIImage] = []
+    var imgEmotion: [UIImage: Int] = [:]
+    
     var fetchResult: PHFetchResult<PHAsset>!    // 사진에 대한 메타 데이터 저장
     var emotionGroup = EmotionGroup()              // 메모들을 읽어온다
     var emotionLists = ["😫", "☹️", "😐", "😊", "🥰"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         // firebase에서 모든 plan을 가져온다.
         // group을 배열에 저장해둬야할듯
@@ -51,17 +57,33 @@ class PlanDetailViewController: UIViewController{
         tap.cancelsTouchesInView = false
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        // 모든 사진을 다 가져온다. 일부사진만 가져오는 것은
-        // https://developer.apple.com/documentation/photokit/browsing_and_modifying_photo_albums 참조
-        
-        // firebase에서 해당 plan에 해당하는 album group을 가져온다.
-        // Firestore.firestore().collection("plans").document("key").getDocument(source: <#T##FirestoreSource#>, completion: <#T##(DocumentSnapshot?, Error?) -> Void#>)
-
-        let allPhotosOptions = PHFetchOptions()
-        allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        fetchResult = PHAsset.fetchAssets(with: allPhotosOptions) // 모든 사진의 목록을 갖는다
-        collectionView.reloadData()
+    override func viewDidAppear(_ animated: Bool){
+        // plan의 key를 이용해 해당 폴더 내의 이미지들을 가져와 imgList에 저장한다.
+        imgList = []
+        imgEmotion = [:]
+        let ref = storage.reference().child(plan!.key);
+        ref.listAll { (result, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                for item in result!.items {
+                    item.getData(maxSize: 1*1024*1024) { [self] data, error in
+                        if let error = error {
+                            print(error)
+                        }
+                        else {
+                            self.imgList.append(UIImage(data: data!)!)
+                            self.imgEmotion[UIImage(data: data!)!] = self.plan?.album[item]     // emotion과 연결
+                            
+                            print(imgEmotion)
+                        }
+                        // 늦게 실행되므로 reload는 여기서 이뤄져야 함.
+                        collectionView.reloadData()
+                    }
+                }
+            }
+        }
     }
     
     @objc func dismissKeyboard(sender:UITapGestureRecognizer) {
@@ -89,19 +111,14 @@ class PlanDetailViewController: UIViewController{
 extension PlanDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 사진의 갯수를 리턴한다.
-        return fetchResult == nil ? 0: fetchResult.count
+        return imgList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for:  indexPath) as! ImageCollectionViewCell
-        
-        let asset = fetchResult.object(at: indexPath.row)  // 이미지에 대한 메타 데이터를 가져온다
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(), contentMode: .aspectFill, options: nil){
-            (image, _) in    // 요청한 이미지를 디스크로부터 읽으면 이 함수가 호출 된다.
-            cell.imageView.image = image  // 여기서 이미지를 보이게 한다
-            cell.emotion.text = self.emotionLists[self.emotionGroup.getEmotionIndex(key: asset.localIdentifier) ?? 2]
-        }
+        cell.imageView.image = imgList[indexPath.row]
+        cell.emotion.text = emotionLists[imgEmotion[imgList[indexPath.row]] ?? 2]
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -124,16 +141,9 @@ extension PlanDetailViewController {
 
         // 이미지에 대한 정보를 가져온다
         let indexPath = sender as! IndexPath    // sender이 indexPath이다.
-        let asset = fetchResult.object(at: indexPath.row)
-        albumDetailViewController.emotionIdentifier = asset.localIdentifier  // 이미지에 대한 식별자이다.
-        albumDetailViewController.emotionGroup = emotionGroup
-
-        let options = PHImageRequestOptions()
-        options.deliveryMode = .highQualityFormat // 고해상도를 가져오기 우l함임
-        PHCachingImageManager.default().requestImage(for: asset, targetSize: CGSize(), contentMode: .aspectFill, options: options, resultHandler: { image, _ in
-            // 한참있다가 실행된다. 즉, albumDetailViewController가 로딩되고 appear한 후에 나타난다.
-            albumDetailViewController.image = image  // 앞에서 didSet을 사용한 이유이다.
-        })
+        let image = imgList[indexPath.row]
+        print(image)
+        albumDetailViewController.setImage(img: image)      // albumDetailViewController의 이미지 변경
     }
 }
 
@@ -158,18 +168,65 @@ extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         picker.dismiss(animated: true, completion: nil)
 
         // 앨범에 저장을 요청하면서 저장 완료에 대한 handler를 제공한다
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(afterSaveImage), nil)
+        var data = Data()
+        data = image.jpegData(compressionQuality: 0.8)!
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/png"
+        if let filePath = plan?.key {
+            let fileName = "/"+random(15)+".png"
+            storage.reference().child(filePath+fileName).putData(data, metadata: metaData){
+                (metaData, error) in if let error = error {
+                    print(error)
+                    return
+                }else{
+                    print("Success")
+                    self.afterSaveImage(image)
+                }
+            }
+        }
     }
     
-    @objc func afterSaveImage(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer) {
+    func afterSaveImage(_ image: UIImage) {
+        // plan의 key를 이용해 해당 폴더 내의 이미지들을 가져와 imgList에 저장한다.
+        imgList = []
+        imgEmotion = [:]
+        let ref = storage.reference().child(plan!.key);
+        ref.listAll { (result, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                for item in result!.items {
+                    item.getData(maxSize: 1*1024*1024) { [self] data, error in
+                        if let error = error {
+                            print(error)
+                        }
+                        else {
+                            self.imgList.append(UIImage(data: data!)!)
+                            self.imgEmotion[UIImage(data: data!)!] = self.plan?.album[item]     // emotion과 연결
+                            
+                            print(imgEmotion)
+                        }
+                        // 늦게 실행되므로 reload는 여기서 이뤄져야 함.
+                        collectionView.reloadData()
+                    }
+                }
+            }
+        }
+        
+        // 새로운 페이지로는... 못넘어가겠다...
+    }
+}
 
-        // 새로운 사진을 포함하여 모든 사진의 메타 데이터를 가져온다
-        let allPhotosOptions = PHFetchOptions()
-        allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        fetchResult = PHAsset.fetchAssets(with: allPhotosOptions)
-
-        // 새로운 사진은 맨처음에 존재한다. 왜냐하면 생성날자순으로 정렬하였기 때문에
-        let indexPath = IndexPath(row: 0, section: 0)  // 첫 사진에 대한 indexPath 설정
-        performSegue(withIdentifier: "ShowDetail", sender: indexPath) // 그러면 prepare가 호출 될 것이다.
+extension PlanDetailViewController {
+    // for file hash
+    func random(_ n: Int) -> String {
+        let a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        var s = ""
+        for _ in 0..<n {
+            let r = Int(arc4random_uniform(UInt32(a.count)))
+            s += String(a[a.index(a.startIndex, offsetBy: r)])
+        }
+        return s
     }
 }
