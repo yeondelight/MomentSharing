@@ -309,7 +309,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="save"/>
                                         <connections>
-                                            <action selector="saveImageEmotion:" destination="4wX-1x-vSp" eventType="touchUpInside" id="fXs-Gr-ao8"/>
+                                            <segue destination="RkM-kL-XAW" kind="unwind" identifier="unwind" unwindAction="unwindWithSender:" id="eIQ-Sv-smp"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -335,6 +335,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ga-8b-pNq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="RkM-kL-XAW" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2407" y="82"/>
         </scene>

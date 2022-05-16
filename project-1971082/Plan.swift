@@ -15,15 +15,15 @@ class Plan: NSObject, NSCoding{
     var owner: String?
     var name: String?
     var content: String?
-    var album: [FirebaseStorage.StorageReference: Int]
+    var album: [String: Int]
     
-    init(date: Date, owner: String?, name: String?, content: String){
+    init(date: Date, owner: String?, name: String?, content: String, album: [String: Int]){
         self.key=UUID().uuidString
         self.date = Date(timeInterval: 0, since: date)
         self.owner = Owner.getOwner()
         self.name = name
         self.content = content
-        self.album = [:]
+        self.album = album
         super.init()
     }
     
@@ -34,7 +34,9 @@ class Plan: NSObject, NSCoding{
         aCoder.encode(owner, forKey: "owner")
         aCoder.encode(name, forKey: "name")
         aCoder.encode(content, forKey: "content")
+        print("############################")
         aCoder.encode(album, forKey: "album")
+        print("############################")
     }
     
     // unarchiving할때 호출된다
@@ -44,14 +46,14 @@ class Plan: NSObject, NSCoding{
         owner = aDecoder.decodeObject(forKey: "owner") as? String
         name = aDecoder.decodeObject(forKey: "name") as? String
         content = aDecoder.decodeObject(forKey: "content") as! String? ?? ""
-        album = aDecoder.decodeObject(forKey: "album") as! [FirebaseStorage.StorageReference: Int]? ?? [:]
+        album = aDecoder.decodeObject(forKey: "album") as! [String: Int]? ?? [:]
         super.init()
     }
 }
 
 extension Plan{
     convenience init(date:Date? = nil, withData: Bool = false){
-        self.init(date:date ?? Date(), owner: "me", name: "New Album", content:"shared album with plan")
+        self.init(date:date ?? Date(), owner: "me", name: "New Album", content:"shared album with plan", album:[:])
     }
     
     func clone() -> Plan {

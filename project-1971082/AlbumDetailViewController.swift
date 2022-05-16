@@ -13,33 +13,31 @@ class AlbumDetailViewController: UIViewController {
     @IBOutlet weak var emotionPickerView: UIPickerView!
     @IBOutlet weak var stackView: UIStackView!
     
-    var emotionLists = ["😫", "☹️", "😐", "😊", "🥰"]
-    
-    var image: UIImage?
-    
-    func setImage(img: UIImage) {
-        image = img
+    var key: String?
+    var image: UIImage? {
+        didSet {
+            if let imageView = imageView{
+                imageView.image = image
+            }
+        }
     }
-
-    var emotionIdentifier: String!      // 이미지 식별자를 전달 받음
-    var emotionGroup: EmotionGroup!     // 메모 그룹을 전달 받음
-    var emotionIndex: Int!              // emotionGroup은 pickerView의 index들을 저장한다.
+    var emotionLists = ["😫", "☹️", "😐", "😊", "🥰"]
+    var emotionIndex: Int? {
+        didSet {
+            if index != nil{
+                emotionPickerView.selectRow(emotionIndex!, inComponent: 0, animated: true)
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.image = image
         emotionPickerView.dataSource = self
-        emotionPickerView.delegate = self
-        emotionIndex = 2
-        //emotionIndex = emotionGroup.getEmotionIndex(key: emotionIdentifier) ?? 2
-        emotionPickerView.selectRow(emotionIndex, inComponent: 0, animated: true)
+        emotionPickerView.delegate = self 
+        emotionPickerView.selectRow(emotionIndex ?? 2, inComponent: 0, animated: true)
     }
     
-    @IBAction func saveImageEmotion(_ sender: UIButton) {
-        emotionGroup.emotions[emotionIdentifier] = emotionPickerView.selectedRow(inComponent: 0)
-        emotionGroup.saveEmotionGroup()
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 extension AlbumDetailViewController: UIPickerViewDelegate, UIPickerViewDataSource {

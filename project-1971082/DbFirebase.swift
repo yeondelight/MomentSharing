@@ -34,7 +34,6 @@ class DbFirebase: Database {
         let storeDate: [String : Any] = ["date": plan.date, "data": data!]
         reference.document(plan.key).setData(storeDate)
         
-        // planKey를 바탕으로 firebase storage의 폴더를 생성한다 : 이미지 저장
         if action == .Add{
             print(plan.key)
         }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseStorage
 
 class PlanGroupViewController: UIViewController {
 
@@ -77,7 +79,29 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
         let plan = planGroup.getPlans()[indexPath.row] // Date를 주지않으면 전체 plan을 가지고 온다
         
         // 0, 1, 2순서가 맞아야 한다. 안맞으면 스트로보드에서 다시 맞도록 위치를 바꾸어야 한다
-        (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.jpg")
+        // Thumbnail img는 앨범에 사진이 있으면 앨범의 첫번째 사진으로,
+        // 앨범에 사진이 없거나 불러올 수 없는 상태이면 defaultImg로 설정된다.
+        let ref = Storage.storage().reference().child(plan.key);
+        ref.listAll { (result, error) in
+            if let error = error {
+                print(error)
+                (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+            }
+            else {
+                
+                result!.items[0].getData(maxSize: 1*1024*1024) { [self] data, error in
+                    if let error = error {
+                        print(error)
+                        (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+                    }
+                    else {
+                        (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(data: data!)!
+                    }
+                }
+            }
+        }
+        
+        
         (cell?.contentView.subviews[1] as! UILabel).text = plan.name
         (cell?.contentView.subviews[2] as! UILabel).text = plan.owner
         (cell?.contentView.subviews[3] as! UILabel).text = plan.date.toStringDate()

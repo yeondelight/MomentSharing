@@ -21,15 +21,14 @@ class PlanDetailViewController: UIViewController{
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    let fireStoreID: String = "gs://iostermproject-a0b92.appspot.com/"
+    
     var plan: Plan? // 나중에 PlanGroupViewController로부터 데이터를 전달받는다
     var saveChangeDelegate: ((Plan)-> Void)?
     
     var storage = Storage.storage()
-    var imgList: [UIImage] = []
-    var imgEmotion: [UIImage: Int] = [:]
+    var refList: [StorageReference] =  []
     
-    var fetchResult: PHFetchResult<PHAsset>!    // 사진에 대한 메타 데이터 저장
-    var emotionGroup = EmotionGroup()              // 메모들을 읽어온다
     var emotionLists = ["😫", "☹️", "😐", "😊", "🥰"]
     
     override func viewDidLoad() {
@@ -46,6 +45,8 @@ class PlanDetailViewController: UIViewController{
         
         navigationItem.title = plan?.name
         
+        setFlowLayout() // 한줄에 사진 3개씩만 보이도록
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
@@ -59,8 +60,7 @@ class PlanDetailViewController: UIViewController{
 
     override func viewDidAppear(_ animated: Bool){
         // plan의 key를 이용해 해당 폴더 내의 이미지들을 가져와 imgList에 저장한다.
-        imgList = []
-        imgEmotion = [:]
+        refList = []
         let ref = storage.reference().child(plan!.key);
         ref.listAll { (result, error) in
             if let error = error {
@@ -68,19 +68,8 @@ class PlanDetailViewController: UIViewController{
             }
             else {
                 for item in result!.items {
-                    item.getData(maxSize: 1*1024*1024) { [self] data, error in
-                        if let error = error {
-                            print(error)
-                        }
-                        else {
-                            self.imgList.append(UIImage(data: data!)!)
-                            self.imgEmotion[UIImage(data: data!)!] = self.plan?.album[item]     // emotion과 연결
-                            
-                            print(imgEmotion)
-                        }
-                        // 늦게 실행되므로 reload는 여기서 이뤄져야 함.
-                        collectionView.reloadData()
-                    }
+                    self.refList.append(item)
+                    self.collectionView.reloadData()
                 }
             }
         }
@@ -103,22 +92,43 @@ class PlanDetailViewController: UIViewController{
         }
         navigationController?.popViewController(animated: true)
     }
-    
-
 }
 
 // for album
 extension PlanDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // 사진의 갯수를 리턴한다.
-        return imgList.count
+        return refList.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for:  indexPath) as! ImageCollectionViewCell
-        cell.imageView.image = imgList[indexPath.row]
-        cell.emotion.text = emotionLists[imgEmotion[imgList[indexPath.row]] ?? 2]
+        // refList를 바탕으로 이미지를 가져온다.
+        refList[indexPath.row].getData(maxSize: 1*1024*1024) { [self] data, error in
+            if let error = error {
+                print(error)
+                cell.imageView.image = nil
+            }
+            else {
+                cell.imageView.image = UIImage(data: data!)!
+            }
+        }
+        
+        let url = refList[indexPath.row].downloadURL(){ url, error in
+            if let error = error {
+                print(error)
+            }
+            else {
+                let albumKey = self.fireStoreID + url!.absoluteString.components(separatedBy: ".com/o/")[1].components(separatedBy: "?alt=")[0].replacingOccurrences(of: "%2F", with: "/")
+                
+                let index = try? self.plan?.album[albumKey]
+                cell.emotion.text = self.emotionLists[index ?? 2]
+                print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+                print(index, cell.emotion.text)
+                
+            }
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -131,6 +141,15 @@ extension PlanDetailViewController: UICollectionViewDelegate, UICollectionViewDa
         print("is clicked.")
         performSegue(withIdentifier: "ShowDetail", sender: indexPath)
     }
+    
+    func setFlowLayout(){
+        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        flowLayout.minimumLineSpacing = 1
+        flowLayout.minimumInteritemSpacing = 1
+        let myWidth: CGFloat = self.collectionView.frame.width / 3
+        flowLayout.itemSize = CGSize(width: myWidth, height: myWidth)
+        self.collectionView.collectionViewLayout = flowLayout
+    }
 }
 
 // for album segue
@@ -141,10 +160,44 @@ extension PlanDetailViewController {
 
         // 이미지에 대한 정보를 가져온다
         let indexPath = sender as! IndexPath    // sender이 indexPath이다.
-        let image = imgList[indexPath.row]
-        print(image)
-        albumDetailViewController.setImage(img: image)      // albumDetailViewController의 이미지 변경
+        var image: UIImage!
+        var emotionIndex: Int!
+        
+        refList[indexPath.row].getData(maxSize: 1*1024*1024) { [self] data, error in
+            if let error = error {
+                print(error)
+                image = nil
+            }
+            else {
+                image = UIImage(data: data!)!
+                
+                let url = refList[indexPath.row].downloadURL(){ url, error in
+                    if let error = error {
+                        print(error)
+                    }
+                    else {
+                        let albumKey = self.fireStoreID + url!.absoluteString.components(separatedBy: ".com/o/")[1].components(separatedBy: "?alt=")[0].replacingOccurrences(of: "%2F", with: "/")
+                        emotionIndex = try? self.plan?.album[albumKey]
+                        print(emotionIndex)
+                        albumDetailViewController.key = albumKey                // for return
+                        albumDetailViewController.image = image                 // albumDetailViewController의 이미지 변경
+                        albumDetailViewController.emotionIndex = emotionIndex   // albumDetailViewController의 emotion 변경
+                    }
+                }
+            }
+        }
     }
+    
+    // AlbumDetailViewController로부터 emotionIndex 얻기
+    @IBAction func unwind(sender: UIStoryboardSegue) {
+        if let albumDetailViewController = sender.source as? AlbumDetailViewController {
+            let key = albumDetailViewController.key
+            let index = albumDetailViewController.emotionPickerView.selectedRow(inComponent: 0)
+            plan?.album[key!] = index
+            self.saveChangeDelegate?(self.plan!)
+        }
+    }
+
 }
 
 // for save btn
@@ -179,7 +232,10 @@ extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigatio
                     print(error)
                     return
                 }else{
-                    print("Success")
+                    let albumKey = self.fireStoreID + filePath + fileName
+                    let storageRef = self.storage.reference(forURL: albumKey)
+                    self.plan!.album[albumKey] = 2
+                    self.saveChangeDelegate?(self.plan!)
                     self.afterSaveImage(image)
                 }
             }
@@ -188,8 +244,7 @@ extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigatio
     
     func afterSaveImage(_ image: UIImage) {
         // plan의 key를 이용해 해당 폴더 내의 이미지들을 가져와 imgList에 저장한다.
-        imgList = []
-        imgEmotion = [:]
+        refList = []
         let ref = storage.reference().child(plan!.key);
         ref.listAll { (result, error) in
             if let error = error {
@@ -197,24 +252,11 @@ extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigatio
             }
             else {
                 for item in result!.items {
-                    item.getData(maxSize: 1*1024*1024) { [self] data, error in
-                        if let error = error {
-                            print(error)
-                        }
-                        else {
-                            self.imgList.append(UIImage(data: data!)!)
-                            self.imgEmotion[UIImage(data: data!)!] = self.plan?.album[item]     // emotion과 연결
-                            
-                            print(imgEmotion)
-                        }
-                        // 늦게 실행되므로 reload는 여기서 이뤄져야 함.
-                        collectionView.reloadData()
-                    }
+                    self.refList.append(item)
+                    self.collectionView.reloadData()
                 }
             }
         }
-        
-        // 새로운 페이지로는... 못넘어가겠다...
     }
 }
 
