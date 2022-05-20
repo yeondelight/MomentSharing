@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import PhotosUI
 import Firebase
+import FirebaseAuth
 import FirebaseStorage
 
 class PlanDetailViewController: UIViewController{
@@ -18,6 +19,8 @@ class PlanDetailViewController: UIViewController{
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var contentTextField: UITextField!
+    @IBOutlet weak var deleteBtn: UIButton!
+    @IBOutlet weak var saveBtn: UIButton!
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -36,6 +39,18 @@ class PlanDetailViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.tintColor = UIColor(displayP3Red: 255/255, green: 111/255, blue: 97/255, alpha: 1)
+        
+        // 앨범 소유자가 아닌 경우 앨범 정보 변경이 불가능하다.
+        // 사진에 대한 표현은 바꿀 수 있으며, 사진 또한 추가할 수 있다.
+        if plan?.owner != Auth.auth().currentUser!.email!.components(separatedBy: "@")[0] {
+            planName.isUserInteractionEnabled = false
+            dateTextField.isUserInteractionEnabled = false
+            contentTextField.isUserInteractionEnabled = false
+            deleteBtn.isHidden = true
+            saveBtn.isHidden = true
+        }
         
         // Do any additional setup after loading the view.
         // firebase에서 모든 plan을 가져온다.
@@ -87,18 +102,35 @@ class PlanDetailViewController: UIViewController{
         view.endEditing(true)
     }
     
+    // deleteBtn
+    @IBAction func deletePlan(_ sender: Any) {
+        let title = "\(planName.text!)을 삭제할까요?"
+        let message = "모든 사용자에게서 이 앨범이 삭제됩니다."
+
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let deleteAction = UIAlertAction(title: "Confirm", style: .destructive, handler: { [self] (action:UIAlertAction) -> Void in
+            let pgvc = self.navigationController?.children[0] as! PlanGroupViewController
+            pgvc.planGroup.saveChange(plan: plan!, action: .Delete)
+            self.navigationController?.popViewController(animated: true)
+        })
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        return present(alertController, animated: true)
+    }
+    
     // saveBtn
     @IBAction func gotoBack(_ sender: UIButton) {
         if let saveChangeDelegate = saveChangeDelegate{
             plan!.name = planName.text
             plan!.date = planDate ?? Date()
-            plan!.owner = ownerLabel.text    // 수정할 수 없는 UILabel이므로 필요없는 연산임
+            plan!.owner = ownerLabel.text
             plan!.content = contentTextField.text
             saveChangeDelegate(plan!)
         }
         navigationController?.popViewController(animated: true)
     }
-    
 }
 
 // for album
@@ -146,7 +178,7 @@ extension PlanDetailViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 이 이미지를 클릭하면 자세히 보기로 전이한다. Send가 self가 아니고 클릭된 Cell의 indexPath이다.
         print("is clicked.")
-        performSegue(withIdentifier: "ShowDetail", sender: indexPath)
+        performSegue(withIdentifier: "album", sender: indexPath)
     }
     
     func setFlowLayout(){
@@ -163,32 +195,34 @@ extension PlanDetailViewController: UICollectionViewDelegate, UICollectionViewDa
 extension PlanDetailViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let albumDetailViewController = segue.destination as! AlbumDetailViewController
+        if segue.identifier == "album" {
+            let albumDetailViewController = segue.destination as! AlbumDetailViewController
 
-        // 이미지에 대한 정보를 가져온다
-        let indexPath = sender as! IndexPath    // sender이 indexPath이다.
-        var image: UIImage!
-        var emotionIndex: Int!
-        
-        refList[indexPath.row].getData(maxSize: 1*1024*1024) { [self] data, error in
-            if let error = error {
-                print(error)
-                image = nil
-            }
-            else {
-                image = UIImage(data: data!)!
-                
-                let url = refList[indexPath.row].downloadURL(){ url, error in
-                    if let error = error {
-                        print(error)
-                    }
-                    else {
-                        let albumKey = self.fireStoreID + url!.absoluteString.components(separatedBy: ".com/o/")[1].components(separatedBy: "?alt=")[0].replacingOccurrences(of: "%2F", with: "/")
-                        emotionIndex = try? self.plan?.album[albumKey]
-                        print(emotionIndex)
-                        albumDetailViewController.key = albumKey                // for return
-                        albumDetailViewController.image = image                 // albumDetailViewController의 이미지 변경
-                        albumDetailViewController.emotionIndex = emotionIndex   // albumDetailViewController의 emotion 변경
+            // 이미지에 대한 정보를 가져온다
+            let indexPath = sender as! IndexPath    // sender이 indexPath이다.
+            var image: UIImage!
+            var emotionIndex: Int!
+            
+            refList[indexPath.row].getData(maxSize: 1*1024*1024) { [self] data, error in
+                if let error = error {
+                    print(error)
+                    image = nil
+                }
+                else {
+                    image = UIImage(data: data!)!
+                    
+                    let url = refList[indexPath.row].downloadURL(){ url, error in
+                        if let error = error {
+                            print(error)
+                        }
+                        else {
+                            let albumKey = self.fireStoreID + url!.absoluteString.components(separatedBy: ".com/o/")[1].components(separatedBy: "?alt=")[0].replacingOccurrences(of: "%2F", with: "/")
+                            emotionIndex = try? self.plan?.album[albumKey]
+                            print(emotionIndex)
+                            albumDetailViewController.key = albumKey                // for return
+                            albumDetailViewController.image = image                 // albumDetailViewController의 이미지 변경
+                            albumDetailViewController.emotionIndex = emotionIndex   // albumDetailViewController의 emotion 변경
+                        }
                     }
                 }
             }
@@ -217,6 +251,7 @@ extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         pickerViewController.delegate = self
         present(pickerViewController, animated: true, completion: nil)
     }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)

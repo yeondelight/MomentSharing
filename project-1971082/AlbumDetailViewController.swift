@@ -32,6 +32,9 @@ class AlbumDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.tintColor = UIColor(displayP3Red: 255/255, green: 111/255, blue: 97/255, alpha: 1)
+        
         imageView.image = image
         emotionPickerView.dataSource = self
         emotionPickerView.delegate = self 

@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseAuth
 import FirebaseStorage
 
 class PlanGroupViewController: UIViewController {
@@ -32,25 +33,24 @@ class PlanGroupViewController: UIViewController {
         planGroup = PlanGroup(parentNotification: receivingNotification)
         planGroup.queryPlan(date: Date())       // 이달의 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
         
-        let leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editingPlans))
+        // barbutton에 이미지 넣기
+        var image = UIImage(named: "logout.png")?.resizeImage(size: CGSize(width: 10, height: 25))
+        image = image?.withRenderingMode(.alwaysOriginal)
+        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(logout))
         navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        // 여기서 호출하는 이유는 present라는 함수 ViewController의 함수인데 이함수는 ViewController의 Layout이 완료된 이후에만 동작하기 때문
-        Owner.loadOwner(sender: self)
-        
-    }
-    
-    @IBAction func editingPlans(_ sender: UIBarButtonItem) {
-        if planGroupTableView.isEditing == true{
-            planGroupTableView.isEditing = false
-            sender.title = "Edit"
-        }else{
-            planGroupTableView.isEditing = true
-            sender.title = "Done"
+    @objc func logout(){
+        do {
+            try Auth.auth().signOut()
+            let login = UIStoryboard.init(name: "Login", bundle: nil)
+            guard let loginController = login.instantiateViewController(withIdentifier: "LoginController")as? LoginViewController else {return}
+            loginController.modalPresentationStyle = .fullScreen
+            self.present(loginController, animated: false, completion: nil)
         }
-
+        catch {
+            print(error)
+        }
     }
     
     @IBAction func addingPlans(_ sender: UIButton) {
@@ -65,7 +65,6 @@ class PlanGroupViewController: UIViewController {
     // for addPlanBtn custom
     func addPlanBtnCustom(){
         // btnCustom
-        addPlanBtn.layer.cornerRadius = addPlanBtn.layer.frame.size.width/2
         addPlanBtn.layer.shadowColor = UIColor.black.cgColor // 색깔
         addPlanBtn.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
         addPlanBtn.layer.shadowOffset = CGSize(width: 0, height: 4) // 위치조정
@@ -107,15 +106,20 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
                 (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
             }
             else {
-                
-                result!.items[0].getData(maxSize: 1*1024*1024) { [self] data, error in
-                    if let error = error {
-                        print(error)
-                        (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+                let item = result!.items[safe: 0]
+                if item != nil {
+                    item!.getData(maxSize: 1*1024*1024) { [self] data, error in
+                        if let error = error {
+                            print(error)
+                            (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+                        }
+                        else {
+                            (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(data: data!)!
+                        }
                     }
-                    else {
-                        (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(data: data!)!
-                    }
+                }
+                else {
+                    (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
                 }
             }
         }
@@ -127,31 +131,6 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
         
         return cell!
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        if editingStyle == .delete{
-            
-            let plan = self.planGroup.getPlans()[indexPath.row]
-            let title = "Delete \(plan.name!)"
-            let message = "이 앨범에 접근할 수 있는 다른 사람에게서도 앨범이 삭제됩니다."
-
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action:UIAlertAction) -> Void in
-                
-                // 선택된 row의 플랜을 가져온다
-                let plan = self.planGroup.getPlans()[indexPath.row]
-                // 단순히 데이터베이스에 지우기만 하면된다. 그러면 꺼꾸로 데이터베이스에서 지워졌음을 알려준다
-                self.planGroup.saveChange(plan: plan, action: .Delete)
-            })
-            
-            alertController.addAction(cancelAction)
-            alertController.addAction(deleteAction)
-            present(alertController, animated: true, completion: nil) //여기서 waiting 하지 않는다
-        }
-    }
-    
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
@@ -193,7 +172,7 @@ extension PlanGroupViewController{
             planDetailViewController.saveChangeDelegate = saveChange
                         
             // 빈 plan을 생성하여 전달한다
-            planDetailViewController.plan = Plan(date:nil, withData: false)
+            planDetailViewController.plan = Plan(date:nil, owner: Auth.auth().currentUser!.email!.components(separatedBy: "@")[0], withData: false)
             planGroupTableView.selectRow(at: nil, animated: true, scrollPosition: .none)
         }
     }

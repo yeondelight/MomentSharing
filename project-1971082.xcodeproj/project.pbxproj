@@ -24,10 +24,17 @@
 		E0A9D8682836467E0041637B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A9D8672836467E0041637B /* LoginViewController.swift */; };
 		E0A9D86A28364ED20041637B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D86928364ED20041637B /* Login.storyboard */; };
 		E0A9D86C28364F3D0041637B /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A9D86B28364F3D0041637B /* SignupViewController.swift */; };
-		E0AD067C28224AD2007C8365 /* apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0AD067B28224AD2007C8365 /* apple.jpg */; };
+		E0A9D86E28373B7A0041637B /* ExtendedArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A9D86D28373B7A0041637B /* ExtendedArray.swift */; };
+		E0A9D87B2837DCD70041637B /* apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D8732837DCC10041637B /* apple.jpg */; };
+		E0A9D8832837E6780041637B /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D87D2837E6780041637B /* logout.png */; };
+		E0A9D8842837E6780041637B /* logo_signUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D87E2837E6780041637B /* logo_signUp.png */; };
+		E0A9D8852837E6780041637B /* back.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D87F2837E6780041637B /* back.jpg */; };
+		E0A9D8862837E6780041637B /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D8802837E6780041637B /* logo.png */; };
+		E0A9D8872837E6780041637B /* plusBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D8812837E6780041637B /* plusBtn.png */; };
+		E0A9D8882837E6780041637B /* logo_full.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D8822837E6780041637B /* logo_full.png */; };
+		E0C2346D2837F36D00B73D99 /* ExtendedUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C2346C2837F36D00B73D99 /* ExtendedUIImage.swift */; };
 		E0F972C828292A540028B47F /* DbFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F972C728292A540028B47F /* DbFirebase.swift */; };
 		E0FEC71A281A336200C9F042 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */; };
-		E0FEC71C281A87CA00C9F042 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FEC71B281A87CA00C9F042 /* Owner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,10 +58,17 @@
 		E0A9D8672836467E0041637B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E0A9D86928364ED20041637B /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		E0A9D86B28364F3D0041637B /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
-		E0AD067B28224AD2007C8365 /* apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = apple.jpg; sourceTree = "<group>"; };
+		E0A9D86D28373B7A0041637B /* ExtendedArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedArray.swift; sourceTree = "<group>"; };
+		E0A9D8732837DCC10041637B /* apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = apple.jpg; sourceTree = "<group>"; };
+		E0A9D87D2837E6780041637B /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		E0A9D87E2837E6780041637B /* logo_signUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_signUp.png; sourceTree = "<group>"; };
+		E0A9D87F2837E6780041637B /* back.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = back.jpg; sourceTree = "<group>"; };
+		E0A9D8802837E6780041637B /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		E0A9D8812837E6780041637B /* plusBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusBtn.png; sourceTree = "<group>"; };
+		E0A9D8822837E6780041637B /* logo_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_full.png; sourceTree = "<group>"; };
+		E0C2346C2837F36D00B73D99 /* ExtendedUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedUIImage.swift; sourceTree = "<group>"; };
 		E0F972C728292A540028B47F /* DbFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFirebase.swift; sourceTree = "<group>"; };
 		E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
-		E0FEC71B281A87CA00C9F042 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
 		FFC632C909B3B7C3259E3F04 /* Pods-project-1971082.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-1971082.release.xcconfig"; path = "Target Support Files/Pods-project-1971082/Pods-project-1971082.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,27 +122,34 @@
 		E07D55D1281004910049386F /* project-1971082 */ = {
 			isa = PBXGroup;
 			children = (
+				E07D55DD281004930049386F /* LaunchScreen.storyboard */,
+				E0A9D86928364ED20041637B /* Login.storyboard */,
+				E07D55D8281004910049386F /* Main.storyboard */,
 				E07D55D2281004910049386F /* AppDelegate.swift */,
 				E07D55D4281004910049386F /* SceneDelegate.swift */,
-				E07D55D6281004910049386F /* PlanGroupViewController.swift */,
-				E0FEC71B281A87CA00C9F042 /* Owner.swift */,
-				E07D55E62810058A0049386F /* PlanGroup.swift */,
-				E07D55EA2810084E0049386F /* Database.swift */,
-				E0F972C728292A540028B47F /* DbFirebase.swift */,
-				E07D55E8281006280049386F /* Plan.swift */,
-				E07D55D8281004910049386F /* Main.storyboard */,
 				E0A9D8672836467E0041637B /* LoginViewController.swift */,
 				E0A9D86B28364F3D0041637B /* SignupViewController.swift */,
-				E0A9D86928364ED20041637B /* Login.storyboard */,
+				E07D55E8281006280049386F /* Plan.swift */,
+				E07D55E62810058A0049386F /* PlanGroup.swift */,
+				E07D55D6281004910049386F /* PlanGroupViewController.swift */,
 				E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */,
-				E07D91B128101B0600D6D8DA /* ExtendedDate.swift */,
-				E0A80F40282281CC0088F482 /* ImageCollectionViewCell.swift */,
 				E0A80F42282283800088F482 /* AlbumDetailViewController.swift */,
+				E0A80F40282281CC0088F482 /* ImageCollectionViewCell.swift */,
+				E07D55EA2810084E0049386F /* Database.swift */,
+				E0F972C728292A540028B47F /* DbFirebase.swift */,
+				E0A9D86D28373B7A0041637B /* ExtendedArray.swift */,
+				E07D91B128101B0600D6D8DA /* ExtendedDate.swift */,
+				E0C2346C2837F36D00B73D99 /* ExtendedUIImage.swift */,
 				E07D55DB281004930049386F /* Assets.xcassets */,
-				E07D55DD281004930049386F /* LaunchScreen.storyboard */,
 				E07D55E0281004930049386F /* Info.plist */,
-				E0AD067B28224AD2007C8365 /* apple.jpg */,
 				E0A0FECB2828C8510035386D /* GoogleService-Info.plist */,
+				E0A9D8732837DCC10041637B /* apple.jpg */,
+				E0A9D87F2837E6780041637B /* back.jpg */,
+				E0A9D8822837E6780041637B /* logo_full.png */,
+				E0A9D87E2837E6780041637B /* logo_signUp.png */,
+				E0A9D8802837E6780041637B /* logo.png */,
+				E0A9D87D2837E6780041637B /* logout.png */,
+				E0A9D8812837E6780041637B /* plusBtn.png */,
 			);
 			path = "project-1971082";
 			sourceTree = "<group>";
@@ -193,11 +214,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E0AD067C28224AD2007C8365 /* apple.jpg in Resources */,
+				E0A9D8842837E6780041637B /* logo_signUp.png in Resources */,
 				E07D55DF281004930049386F /* LaunchScreen.storyboard in Resources */,
 				E0A0FECC2828C8510035386D /* GoogleService-Info.plist in Resources */,
+				E0A9D8882837E6780041637B /* logo_full.png in Resources */,
 				E0A9D86A28364ED20041637B /* Login.storyboard in Resources */,
+				E0A9D8852837E6780041637B /* back.jpg in Resources */,
+				E0A9D87B2837DCD70041637B /* apple.jpg in Resources */,
+				E0A9D8862837E6780041637B /* logo.png in Resources */,
+				E0A9D8832837E6780041637B /* logout.png in Resources */,
 				E07D55DC281004930049386F /* Assets.xcassets in Resources */,
+				E0A9D8872837E6780041637B /* plusBtn.png in Resources */,
 				E07D55DA281004910049386F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -253,10 +280,10 @@
 			files = (
 				E07D55EB2810084E0049386F /* Database.swift in Sources */,
 				E0A80F41282281CC0088F482 /* ImageCollectionViewCell.swift in Sources */,
+				E0A9D86E28373B7A0041637B /* ExtendedArray.swift in Sources */,
 				E07D55D7281004910049386F /* PlanGroupViewController.swift in Sources */,
 				E07D55E9281006280049386F /* Plan.swift in Sources */,
 				E0F972C828292A540028B47F /* DbFirebase.swift in Sources */,
-				E0FEC71C281A87CA00C9F042 /* Owner.swift in Sources */,
 				E0A80F43282283800088F482 /* AlbumDetailViewController.swift in Sources */,
 				E07D91B228101B0600D6D8DA /* ExtendedDate.swift in Sources */,
 				E0A9D86C28364F3D0041637B /* SignupViewController.swift in Sources */,
@@ -264,6 +291,7 @@
 				E07D55E72810058A0049386F /* PlanGroup.swift in Sources */,
 				E07D55D5281004910049386F /* SceneDelegate.swift in Sources */,
 				E0A9D8682836467E0041637B /* LoginViewController.swift in Sources */,
+				E0C2346D2837F36D00B73D99 /* ExtendedUIImage.swift in Sources */,
 				E0FEC71A281A336200C9F042 /* PlanDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

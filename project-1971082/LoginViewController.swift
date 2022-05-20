@@ -13,10 +13,19 @@ class LoginViewController: UIViewController {
 
     @IBOutlet weak var IDTextField: UITextField!
     @IBOutlet weak var PWTextField: UITextField!
+    @IBOutlet weak var signInBtn: UIButton!
+    @IBOutlet weak var signUpBtn: UIButton!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var btnStackViewConstraint: NSLayoutConstraint!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // buttonCustom
+        buttonCustom()
+        errorLabel.isHidden = true
+        btnStackViewConstraint.constant = 16
         
         // Keyboard를 위한 tap gesture 설정
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -37,13 +46,25 @@ class LoginViewController: UIViewController {
             let email = id + "@test.app"
 
             Auth.auth().signIn(withEmail: email, password: passwd) { result, error in
-                if let error = error{
-                    print("Login Error: \(error)")
+                if let error = error as NSError? {
+                    let errorCode = AuthErrorCode(_nsError: error)
+                    switch errorCode.code {
+                        case .userNotFound, .invalidEmail:
+                            self.errorLabel.text = "!! 존재하지 않는 사용자입니다."
+                        case .wrongPassword:
+                            self.errorLabel.text = "!! 비밀번호를 다시 확인해주세요."
+                            self.IDTextField.text = id
+                        default:
+                            self.errorLabel.text = "!! 에러가 발생했습니다. 다시 시도해주세요."
+                    }
+                    self.PWTextField.text = ""
+                    self.errorLabel.isHidden = false
+                    self.btnStackViewConstraint.constant = 40
                     return
                 }
                 print("Login Success")
                 let main = UIStoryboard.init(name: "Main", bundle: nil)
-                guard let navigationController = main.instantiateViewController(withIdentifier: "Navigation Controller")as? UINavigationController else {return}
+                guard let navigationController = main.instantiateViewController(withIdentifier: "NavigationController")as? UINavigationController else {return}
                         
                 navigationController.modalPresentationStyle = .fullScreen
                 self.present(navigationController, animated: true, completion: nil)
@@ -73,6 +94,12 @@ class LoginViewController: UIViewController {
                 })
             })
         })
+    }
+    
+    func buttonCustom() {
+        // btnCustom
+        signInBtn.layer.cornerRadius = signInBtn.layer.frame.size.height/2
+        signUpBtn.layer.cornerRadius = signUpBtn.layer.frame.size.height/2
     }
         
 }

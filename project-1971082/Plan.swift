@@ -20,7 +20,7 @@ class Plan: NSObject, NSCoding{
     init(date: Date, owner: String?, name: String?, content: String, album: [String: Int]){
         self.key=UUID().uuidString
         self.date = Date(timeInterval: 0, since: date)
-        self.owner = Owner.getOwner()
+        self.owner = owner
         self.name = name
         self.content = content
         self.album = album
@@ -34,9 +34,7 @@ class Plan: NSObject, NSCoding{
         aCoder.encode(owner, forKey: "owner")
         aCoder.encode(name, forKey: "name")
         aCoder.encode(content, forKey: "content")
-        print("############################")
         aCoder.encode(album, forKey: "album")
-        print("############################")
     }
     
     // unarchiving할때 호출된다
@@ -52,8 +50,8 @@ class Plan: NSObject, NSCoding{
 }
 
 extension Plan{
-    convenience init(date:Date? = nil, withData: Bool = false){
-        self.init(date:date ?? Date(), owner: "me", name: "New Album", content:"shared album with plan", album:[:])
+    convenience init(date:Date? = nil, owner:String? = "none", withData: Bool = false){
+        self.init(date:date ?? Date(), owner: owner, name: "New Album", content:"shared album with plan", album:[:])
     }
     
     func clone() -> Plan {
