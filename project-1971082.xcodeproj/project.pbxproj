@@ -21,6 +21,9 @@
 		E0A0FECC2828C8510035386D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E0A0FECB2828C8510035386D /* GoogleService-Info.plist */; };
 		E0A80F41282281CC0088F482 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A80F40282281CC0088F482 /* ImageCollectionViewCell.swift */; };
 		E0A80F43282283800088F482 /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A80F42282283800088F482 /* AlbumDetailViewController.swift */; };
+		E0A9D8682836467E0041637B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A9D8672836467E0041637B /* LoginViewController.swift */; };
+		E0A9D86A28364ED20041637B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D86928364ED20041637B /* Login.storyboard */; };
+		E0A9D86C28364F3D0041637B /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A9D86B28364F3D0041637B /* SignupViewController.swift */; };
 		E0AD067C28224AD2007C8365 /* apple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0AD067B28224AD2007C8365 /* apple.jpg */; };
 		E0F972C828292A540028B47F /* DbFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F972C728292A540028B47F /* DbFirebase.swift */; };
 		E0FEC71A281A336200C9F042 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */; };
@@ -45,6 +48,9 @@
 		E0A0FECB2828C8510035386D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E0A80F40282281CC0088F482 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E0A80F42282283800088F482 /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
+		E0A9D8672836467E0041637B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E0A9D86928364ED20041637B /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		E0A9D86B28364F3D0041637B /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		E0AD067B28224AD2007C8365 /* apple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = apple.jpg; sourceTree = "<group>"; };
 		E0F972C728292A540028B47F /* DbFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFirebase.swift; sourceTree = "<group>"; };
 		E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +117,9 @@
 				E0F972C728292A540028B47F /* DbFirebase.swift */,
 				E07D55E8281006280049386F /* Plan.swift */,
 				E07D55D8281004910049386F /* Main.storyboard */,
+				E0A9D8672836467E0041637B /* LoginViewController.swift */,
+				E0A9D86B28364F3D0041637B /* SignupViewController.swift */,
+				E0A9D86928364ED20041637B /* Login.storyboard */,
 				E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */,
 				E07D91B128101B0600D6D8DA /* ExtendedDate.swift */,
 				E0A80F40282281CC0088F482 /* ImageCollectionViewCell.swift */,
@@ -187,6 +196,7 @@
 				E0AD067C28224AD2007C8365 /* apple.jpg in Resources */,
 				E07D55DF281004930049386F /* LaunchScreen.storyboard in Resources */,
 				E0A0FECC2828C8510035386D /* GoogleService-Info.plist in Resources */,
+				E0A9D86A28364ED20041637B /* Login.storyboard in Resources */,
 				E07D55DC281004930049386F /* Assets.xcassets in Resources */,
 				E07D55DA281004910049386F /* Main.storyboard in Resources */,
 			);
@@ -249,9 +259,11 @@
 				E0FEC71C281A87CA00C9F042 /* Owner.swift in Sources */,
 				E0A80F43282283800088F482 /* AlbumDetailViewController.swift in Sources */,
 				E07D91B228101B0600D6D8DA /* ExtendedDate.swift in Sources */,
+				E0A9D86C28364F3D0041637B /* SignupViewController.swift in Sources */,
 				E07D55D3281004910049386F /* AppDelegate.swift in Sources */,
 				E07D55E72810058A0049386F /* PlanGroup.swift in Sources */,
 				E07D55D5281004910049386F /* SceneDelegate.swift in Sources */,
+				E0A9D8682836467E0041637B /* LoginViewController.swift in Sources */,
 				E0FEC71A281A336200C9F042 /* PlanDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,12 +12,18 @@ import FirebaseStorage
 class PlanGroupViewController: UIViewController {
 
     @IBOutlet weak var planGroupTableView: UITableView!
+    @IBOutlet weak var addPlanBtn: UIButton!
+    
+    @IBOutlet weak var addPlanTrailing: NSLayoutConstraint!
+    @IBOutlet weak var addPlanBottom: NSLayoutConstraint!
     
     var planGroup: PlanGroup!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Plan List"
+        
+        addPlanBtnCustom()
         
         planGroupTableView.dataSource = self        // 테이블뷰의 데이터 소스로 등록
         planGroupTableView.delegate = self        // 딜리게이터로 등록
@@ -47,16 +53,29 @@ class PlanGroupViewController: UIViewController {
 
     }
     
-    
-    @IBAction func addingPlan(_ sender: UIBarButtonItem) {
+    @IBAction func addingPlans(_ sender: UIButton) {
         performSegue(withIdentifier: "AddPlan", sender: self)
     }
-
+    
     func receivingNotification(plan: Plan?, action: DbAction?){
         // 데이터가 올때마다 이 함수가 호출되는데 맨 처음에는 기본적으로 add라는 액션으로 데이터가 온다.
         self.planGroupTableView.reloadData()  // 속도를 증가시키기 위해 action에 따라 개별적 코딩도 가능하다.
     }
 
+    // for addPlanBtn custom
+    func addPlanBtnCustom(){
+        // btnCustom
+        addPlanBtn.layer.cornerRadius = addPlanBtn.layer.frame.size.width/2
+        addPlanBtn.layer.shadowColor = UIColor.black.cgColor // 색깔
+        addPlanBtn.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
+        addPlanBtn.layer.shadowOffset = CGSize(width: 0, height: 4) // 위치조정
+        addPlanBtn.layer.shadowRadius = 3 // 반경
+        addPlanBtn.layer.shadowOpacity = 0.3 // alpha값
+        
+        let width = UIScreen.main.bounds.size.width
+        addPlanBottom.constant = width * 0.1
+        addPlanTrailing.constant = width * 0.1
+    }
 
 }
 
@@ -104,7 +123,7 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
         
         (cell?.contentView.subviews[1] as! UILabel).text = plan.name
         (cell?.contentView.subviews[2] as! UILabel).text = plan.owner
-        (cell?.contentView.subviews[3] as! UILabel).text = plan.date.toStringDate()
+        (cell?.contentView.subviews[4] as! UILabel).text = plan.date.toStringDate()
         
         return cell!
     }

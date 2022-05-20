@@ -8,5 +8,6 @@ target 'project-1971082' do
   # Pods for project-1971082
   pod 'Firebase/Firestore'
   pod 'Firebase/Storage'
+  pod 'Firebase/Auth'
 
 end

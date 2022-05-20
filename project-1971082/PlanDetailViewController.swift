@@ -15,13 +15,16 @@ import FirebaseStorage
 class PlanDetailViewController: UIViewController{
 
     @IBOutlet weak var planName: UITextField!
-    @IBOutlet weak var dateDatePicker: UIDatePicker!
+    @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var contentTextField: UITextField!
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     let fireStoreID: String = "gs://iostermproject-a0b92.appspot.com/"
+    
+    private let datePicker = UIDatePicker()
+    var planDate: Date?
     
     var plan: Plan? // 나중에 PlanGroupViewController로부터 데이터를 전달받는다
     var saveChangeDelegate: ((Plan)-> Void)?
@@ -39,16 +42,19 @@ class PlanDetailViewController: UIViewController{
         // group을 배열에 저장해둬야할듯
         plan = plan ?? Plan(date: Date(), withData: true)
         planName.text = plan?.name
-        dateDatePicker.date = plan?.date ?? Date()
+        dateTextField.text = dateToString(date: plan?.date ?? Date())
         ownerLabel.text = plan?.owner
         contentTextField.text = plan?.content
         
-        navigationItem.title = plan?.name
+        navigationItem.title = ""
         
         setFlowLayout() // 한줄에 사진 3개씩만 보이도록
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        // dateTextField에서 datePicker가 나오도록
+        configureDatePicker()
         
         // Keyboard를 위한 tap gesture 설정
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -85,13 +91,14 @@ class PlanDetailViewController: UIViewController{
     @IBAction func gotoBack(_ sender: UIButton) {
         if let saveChangeDelegate = saveChangeDelegate{
             plan!.name = planName.text
-            plan!.date = dateDatePicker.date
+            plan!.date = planDate ?? Date()
             plan!.owner = ownerLabel.text    // 수정할 수 없는 UILabel이므로 필요없는 연산임
             plan!.content = contentTextField.text
             saveChangeDelegate(plan!)
         }
         navigationController?.popViewController(animated: true)
     }
+    
 }
 
 // for album
@@ -259,6 +266,40 @@ extension PlanDetailViewController: UIImagePickerControllerDelegate, UINavigatio
         }
     }
 }
+
+// for datePicker - textField
+extension PlanDetailViewController {
+    func configureDatePicker(){
+        self.datePicker.datePickerMode = .date
+        self.datePicker.preferredDatePickerStyle = .wheels
+        self.datePicker.addTarget(self, action: #selector(datePickerValueDidChanged(_:)), for: .valueChanged)
+        self.dateTextField.inputView = self.datePicker
+    }
+    @objc func datePickerValueDidChanged(_ datePicker: UIDatePicker){
+        let formmater = DateFormatter()
+        formmater.dateFormat = "yyyy년 MM월 dd일"
+        formmater.locale = Locale(identifier: "ko_KR")
+        self.planDate = datePicker.date
+        self.datePicker.locale = Locale(identifier: "ko-KR")
+        self.dateTextField.text = formmater.string(from: datePicker.date)
+        planDate = datePicker.date
+        print("***************************************************")
+        print(planDate)
+    }
+    func dateToString(date: Date) -> String! {
+        let formmater = DateFormatter()
+        formmater.dateFormat = "yyyy년 MM월 dd일"
+        formmater.locale = Locale(identifier: "ko_KR")
+        return formmater.string(from: date)
+    }
+    func stringToDate(string: String) -> Date! {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.date(from: string)
+    }
+}
+
 
 extension PlanDetailViewController {
     // for file hash

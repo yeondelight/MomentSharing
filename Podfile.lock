@@ -602,6 +602,9 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
+  - Firebase/Auth (9.0.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 9.0.0)
   - Firebase/CoreOnly (9.0.0):
     - FirebaseCore (= 9.0.0)
   - Firebase/Firestore (9.0.0):
@@ -611,6 +614,11 @@ PODS:
     - Firebase/CoreOnly
     - FirebaseStorage (~> 9.0.0)
   - FirebaseAppCheckInterop (9.0.0)
+  - FirebaseAuth (9.0.0):
+    - FirebaseCore (~> 9.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GTMSessionFetcher/Core (~> 1.7)
   - FirebaseAuthInterop (9.0.0)
   - FirebaseCore (9.0.0):
     - FirebaseCoreDiagnostics (~> 9.0)
@@ -652,11 +660,21 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
   - GoogleUtilities/Environment (7.7.0):
     - PromisesObjC (< 3.0, >= 1.2)
   - GoogleUtilities/Logger (7.7.0):
     - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.7.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/Reachability (7.7.0):
+    - GoogleUtilities/Logger
   - "gRPC-C++ (1.44.0)":
     - "gRPC-C++/Implementation (= 1.44.0)"
     - "gRPC-C++/Interface (= 1.44.0)"
@@ -724,6 +742,7 @@ PODS:
   - PromisesObjC (2.1.0)
 
 DEPENDENCIES:
+  - Firebase/Auth
   - Firebase/Firestore
   - Firebase/Storage
 
@@ -733,6 +752,7 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAppCheckInterop
+    - FirebaseAuth
     - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -756,6 +776,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   Firebase: a876fadc5ea653a377693376fd4f885c62704512
   FirebaseAppCheckInterop: 0da214236777e71d8535c5f3b9cb5174f636a9eb
+  FirebaseAuth: eae56c13e1161da89be202b1fae3ca60b4b8d689
   FirebaseAuthInterop: eaf74707f31a2a38cc133832d2c6410233569cbf
   FirebaseCore: e4c0b5d9727eaee0b43f9ed00baff7500c188d7b
   FirebaseCoreDiagnostics: 54410e5d156bf406a764c2722d9f77d682723b4c
@@ -774,6 +795,6 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
 
-PODFILE CHECKSUM: f2d94bf2e502bdb2948423a13fcd48efdb03b3fb
+PODFILE CHECKSUM: 9f07e0ac18fb4c8a73bedbe49b2c67c9d7b16e18
 
 COCOAPODS: 1.8.4
