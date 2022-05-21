@@ -13,6 +13,6 @@ enum DbAction{
 }
 protocol Database{
     init(parentNotification: ((Plan?, DbAction?) -> Void)?)
-    func queryPlan(fromDate: Date, toDate: Date)
+    func queryPlan()
     func saveChange(plan: Plan, action: DbAction)
 }

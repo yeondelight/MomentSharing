@@ -22,17 +22,20 @@ class PlanGroupViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Plan List"
         
         addPlanBtnCustom()
         barButtonCustom()
+        
         
         planGroupTableView.dataSource = self        // 테이블뷰의 데이터 소스로 등록
         planGroupTableView.delegate = self        // 딜리게이터로 등록
 
         // 단순히 planGroup객체만 생성한다
         planGroup = PlanGroup(parentNotification: receivingNotification)
-        planGroup.queryPlan(date: Date())       // 이달의 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        planGroup.queryPlan()       // 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
     }
     
     @objc func logout(){
@@ -69,20 +72,25 @@ class PlanGroupViewController: UIViewController {
         let width = UIScreen.main.bounds.size.width
         addPlanBottom.constant = width * 0.1
         addPlanTrailing.constant = width * 0.1
+        self.view.bringSubviewToFront(addPlanBtn)
     }
 
     // logoutBtn custom
     func barButtonCustom() {
+        // title 왼쪽
+        let titleLabel = UILabel()
+        titleLabel.textColor = .black
+        titleLabel.text = "Moment List"
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: titleLabel)
+        
         // barbutton에 이미지 넣기
         let logoutBtn = UIButton()
         logoutBtn.setImage(UIImage(named: "logout.png")?.resizeImage(size: CGSize(width: 4, height: 15)), for: .normal)
         let attribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10)]
-        let attributedTitle = NSAttributedString(string: " logout", attributes: attribute)
-        logoutBtn.setAttributedTitle(attributedTitle, for: .normal)
-        logoutBtn.setTitleColor(UIColor(displayP3Red: 255/255, green: 111/255, blue: 97/255, alpha: 1), for:.normal)
         logoutBtn.addTarget(self, action: #selector(logout), for: .touchUpInside)
-        let leftBarButtonItem = UIBarButtonItem(customView: logoutBtn)
-        navigationItem.leftBarButtonItem = leftBarButtonItem
+        let rightBarButtonItem = UIBarButtonItem(customView: logoutBtn)
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
 }
 
@@ -111,7 +119,7 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
         ref.listAll { (result, error) in
             if let error = error {
                 print(error)
-                (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+                (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "logo.png")
             }
             else {
                 let item = result!.items[safe: 0]
@@ -119,7 +127,7 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
                     item!.getData(maxSize: 1*1024*1024) { [self] data, error in
                         if let error = error {
                             print(error)
-                            (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+                            (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "logo.png")
                         }
                         else {
                             (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(data: data!)!
@@ -127,7 +135,7 @@ extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
                 else {
-                    (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "apple.png")
+                    (cell?.contentView.subviews[0] as! UIImageView).image = UIImage(named: "logo.png")
                 }
             }
         }
@@ -180,7 +188,12 @@ extension PlanGroupViewController{
             planDetailViewController.saveChangeDelegate = saveChange
                         
             // 빈 plan을 생성하여 전달한다
-            planDetailViewController.plan = Plan(date:nil, owner: Auth.auth().currentUser!.email!.components(separatedBy: "@")[0], withData: false)
+            // 이 때 Firebase에 저장하고 가야 사용자가 수정해도 저장된다.
+            let newPlan = Plan(date:Date(), owner: Auth.auth().currentUser!.email!.components(separatedBy: "@")[0], withData: false)
+            planGroup.saveChange(plan: newPlan, action: .Add)
+            print("#######PLANGROUP#######")
+            print(planGroup)
+            planDetailViewController.plan = newPlan
             planGroupTableView.selectRow(at: nil, animated: true, scrollPosition: .none)
         }
     }

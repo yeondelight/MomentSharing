@@ -27,7 +27,7 @@ class PlanDetailViewController: UIViewController{
     let fireStoreID: String = "gs://iostermproject-a0b92.appspot.com/"
     
     private let datePicker = UIDatePicker()
-    var planDate: Date?
+    var planDate: Date!
     
     var plan: Plan? // 나중에 PlanGroupViewController로부터 데이터를 전달받는다
     var saveChangeDelegate: ((Plan)-> Void)?
@@ -57,7 +57,8 @@ class PlanDetailViewController: UIViewController{
         // group을 배열에 저장해둬야할듯
         plan = plan ?? Plan(date: Date(), withData: true)
         planName.text = plan?.name
-        dateTextField.text = dateToString(date: plan?.date ?? Date())
+        planDate = plan?.date ?? Date()
+        dateTextField.text = dateToString(date: planDate)
         ownerLabel.text = plan?.owner
         contentTextField.text = plan?.content
         
@@ -124,7 +125,7 @@ class PlanDetailViewController: UIViewController{
     @IBAction func gotoBack(_ sender: UIButton) {
         if let saveChangeDelegate = saveChangeDelegate{
             plan!.name = planName.text
-            plan!.date = planDate ?? Date()
+            plan!.date = planDate!
             plan!.owner = ownerLabel.text
             plan!.content = contentTextField.text
             saveChangeDelegate(plan!)
@@ -221,7 +222,7 @@ extension PlanDetailViewController {
                             print(emotionIndex)
                             albumDetailViewController.key = albumKey                // for return
                             albumDetailViewController.image = image                 // albumDetailViewController의 이미지 변경
-                            albumDetailViewController.emotionIndex = emotionIndex   // albumDetailViewController의 emotion 변경
+                            albumDetailViewController.emotionIndex = emotionIndex ?? 2   // albumDetailViewController의 emotion 변경
                         }
                     }
                 }
@@ -318,8 +319,6 @@ extension PlanDetailViewController {
         self.datePicker.locale = Locale(identifier: "ko-KR")
         self.dateTextField.text = formmater.string(from: datePicker.date)
         planDate = datePicker.date
-        print("***************************************************")
-        print(planDate)
     }
     func dateToString(date: Date) -> String! {
         let formmater = DateFormatter()
