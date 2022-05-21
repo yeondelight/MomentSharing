@@ -25,6 +25,7 @@ class PlanGroupViewController: UIViewController {
         navigationItem.title = "Plan List"
         
         addPlanBtnCustom()
+        barButtonCustom()
         
         planGroupTableView.dataSource = self        // 테이블뷰의 데이터 소스로 등록
         planGroupTableView.delegate = self        // 딜리게이터로 등록
@@ -32,12 +33,6 @@ class PlanGroupViewController: UIViewController {
         // 단순히 planGroup객체만 생성한다
         planGroup = PlanGroup(parentNotification: receivingNotification)
         planGroup.queryPlan(date: Date())       // 이달의 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
-        
-        // barbutton에 이미지 넣기
-        var image = UIImage(named: "logout.png")?.resizeImage(size: CGSize(width: 10, height: 25))
-        image = image?.withRenderingMode(.alwaysOriginal)
-        let leftBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(logout))
-        navigationItem.leftBarButtonItem = leftBarButtonItem
     }
     
     @objc func logout(){
@@ -63,7 +58,7 @@ class PlanGroupViewController: UIViewController {
     }
 
     // for addPlanBtn custom
-    func addPlanBtnCustom(){
+    func addPlanBtnCustom() {
         // btnCustom
         addPlanBtn.layer.shadowColor = UIColor.black.cgColor // 색깔
         addPlanBtn.layer.masksToBounds = false  // 내부에 속한 요소들이 UIView 밖을 벗어날 때, 잘라낼 것인지. 그림자는 밖에 그려지는 것이므로 false 로 설정
@@ -76,6 +71,19 @@ class PlanGroupViewController: UIViewController {
         addPlanTrailing.constant = width * 0.1
     }
 
+    // logoutBtn custom
+    func barButtonCustom() {
+        // barbutton에 이미지 넣기
+        let logoutBtn = UIButton()
+        logoutBtn.setImage(UIImage(named: "logout.png")?.resizeImage(size: CGSize(width: 4, height: 15)), for: .normal)
+        let attribute = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 10)]
+        let attributedTitle = NSAttributedString(string: " logout", attributes: attribute)
+        logoutBtn.setAttributedTitle(attributedTitle, for: .normal)
+        logoutBtn.setTitleColor(UIColor(displayP3Red: 255/255, green: 111/255, blue: 97/255, alpha: 1), for:.normal)
+        logoutBtn.addTarget(self, action: #selector(logout), for: .touchUpInside)
+        let leftBarButtonItem = UIBarButtonItem(customView: logoutBtn)
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+    }
 }
 
 extension PlanGroupViewController: UITableViewDataSource, UITableViewDelegate {
