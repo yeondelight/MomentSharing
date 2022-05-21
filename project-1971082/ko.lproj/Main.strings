@@ -1,0 +1,60 @@
+
+/* Class = "UIButton"; configuration.title = "Save"; ObjectID = "2US-1M-Flb"; */
+"2US-1M-Flb.configuration.title" = "Save";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "2US-1M-Flb"; */
+"2US-1M-Flb.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "by "; ObjectID = "7Uf-Bo-IPg"; */
+"7Uf-Bo-IPg.text" = "by ";
+
+/* Class = "UILabel"; text = "by"; ObjectID = "EFo-aL-gz4"; */
+"EFo-aL-gz4.text" = "by";
+
+/* Class = "UILabel"; text = "ownerLabel"; ObjectID = "EJn-0d-ECE"; */
+"EJn-0d-ECE.text" = "ownerLabel";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Kxf-YB-8fh"; */
+"Kxf-YB-8fh.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "SDS-oa-m3h"; */
+"SDS-oa-m3h.text" = "Label";
+
+/* Class = "UIButton"; configuration.title = "Delete"; ObjectID = "USh-Sj-cU6"; */
+"USh-Sj-cU6.configuration.title" = "Delete";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "USh-Sj-cU6"; */
+"USh-Sj-cU6.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "V8z-DM-DdQ"; */
+"V8z-DM-DdQ.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "여기를 클릭해 앨범 설명 입력"; ObjectID = "fcW-Ln-agx"; */
+"fcW-Ln-agx.placeholder" = "여기를 클릭해 앨범 설명 입력";
+
+/* Class = "UIButton"; configuration.title = "save"; ObjectID = "hAZ-br-i0t"; */
+"hAZ-br-i0t.configuration.title" = "save";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "hAZ-br-i0t"; */
+"hAZ-br-i0t.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "iUY-NA-ZSE"; */
+"iUY-NA-ZSE.text" = "Label";
+
+/* Class = "UIButton"; configuration.title = " logout"; ObjectID = "mA5-9B-nLL"; */
+"mA5-9B-nLL.configuration.title" = " logout";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "mA5-9B-nLL"; */
+"mA5-9B-nLL.normalTitle" = "Button";
+
+/* Class = "UIButton"; configuration.title = "Add Photo"; ObjectID = "uGG-bw-lAc"; */
+"uGG-bw-lAc.configuration.title" = "Add Photo";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "uGG-bw-lAc"; */
+"uGG-bw-lAc.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "in"; ObjectID = "v78-mr-hQ0"; */
+"v78-mr-hQ0.text" = "in";
+
+/* Class = "UITextField"; placeholder = "2017년 12월 6일"; ObjectID = "z9D-IH-Olx"; */
+"z9D-IH-Olx.placeholder" = "2017년 12월 6일";

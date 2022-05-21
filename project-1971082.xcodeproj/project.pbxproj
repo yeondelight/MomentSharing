@@ -32,6 +32,10 @@
 		E0A9D8872837E6780041637B /* plusBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D8812837E6780041637B /* plusBtn.png */; };
 		E0A9D8882837E6780041637B /* logo_full.png in Resources */ = {isa = PBXBuildFile; fileRef = E0A9D8822837E6780041637B /* logo_full.png */; };
 		E0B4BF5C2838E951007DA85E /* logout.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B4BF5B2838E951007DA85E /* logout.png */; };
+		E0B4BF602838EEEF007DA85E /* logo_full_white.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B4BF5D2838EEEF007DA85E /* logo_full_white.png */; };
+		E0B4BF652838F87D007DA85E /* logo_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B4BF632838F87D007DA85E /* logo_2x.png */; };
+		E0B4BF662838F87D007DA85E /* logo_3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E0B4BF642838F87D007DA85E /* logo_3x.png */; };
+		E0B4BF692838FBF4007DA85E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E0B4BF6B2838FBF4007DA85E /* InfoPlist.strings */; };
 		E0C2346D2837F36D00B73D99 /* ExtendedUIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0C2346C2837F36D00B73D99 /* ExtendedUIImage.swift */; };
 		E0F972C828292A540028B47F /* DbFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F972C728292A540028B47F /* DbFirebase.swift */; };
 		E0FEC71A281A336200C9F042 /* PlanDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */; };
@@ -66,6 +70,13 @@
 		E0A9D8812837E6780041637B /* plusBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plusBtn.png; sourceTree = "<group>"; };
 		E0A9D8822837E6780041637B /* logo_full.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_full.png; sourceTree = "<group>"; };
 		E0B4BF5B2838E951007DA85E /* logout.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logout.png; sourceTree = "<group>"; };
+		E0B4BF5D2838EEEF007DA85E /* logo_full_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_full_white.png; sourceTree = "<group>"; };
+		E0B4BF632838F87D007DA85E /* logo_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_2x.png; sourceTree = "<group>"; };
+		E0B4BF642838F87D007DA85E /* logo_3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_3x.png; sourceTree = "<group>"; };
+		E0B4BF6A2838FBF4007DA85E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E0B4BF6F283904AC007DA85E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		E0B4BF70283904AC007DA85E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		E0B4BF71283904B9007DA85E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E0C2346C2837F36D00B73D99 /* ExtendedUIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedUIImage.swift; sourceTree = "<group>"; };
 		E0F972C728292A540028B47F /* DbFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DbFirebase.swift; sourceTree = "<group>"; };
 		E0FEC719281A336200C9F042 /* PlanDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +115,7 @@
 		E07D55C6281004910049386F = {
 			isa = PBXGroup;
 			children = (
+				E0B4BF6B2838FBF4007DA85E /* InfoPlist.strings */,
 				E07D55D1281004910049386F /* project-1971082 */,
 				E07D55D0281004910049386F /* Products */,
 				9BE25AD85EBA3C345AF3583E /* Pods */,
@@ -144,11 +156,14 @@
 				E07D55E0281004930049386F /* Info.plist */,
 				E0A0FECB2828C8510035386D /* GoogleService-Info.plist */,
 				E0A9D8732837DCC10041637B /* apple.jpg */,
-				E0A9D87F2837E6780041637B /* back.jpg */,
-				E0A9D8822837E6780041637B /* logo_full.png */,
-				E0A9D87E2837E6780041637B /* logo_signUp.png */,
-				E0B4BF5B2838E951007DA85E /* logout.png */,
 				E0A9D8802837E6780041637B /* logo.png */,
+				E0B4BF632838F87D007DA85E /* logo_2x.png */,
+				E0B4BF642838F87D007DA85E /* logo_3x.png */,
+				E0A9D8822837E6780041637B /* logo_full.png */,
+				E0B4BF5D2838EEEF007DA85E /* logo_full_white.png */,
+				E0A9D87E2837E6780041637B /* logo_signUp.png */,
+				E0A9D87F2837E6780041637B /* back.jpg */,
+				E0B4BF5B2838E951007DA85E /* logout.png */,
 				E0A9D8812837E6780041637B /* plusBtn.png */,
 			);
 			path = "project-1971082";
@@ -198,6 +213,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = E07D55C6281004910049386F;
 			productRefGroup = E07D55D0281004910049386F /* Products */;
@@ -215,14 +231,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0A9D8842837E6780041637B /* logo_signUp.png in Resources */,
+				E0B4BF692838FBF4007DA85E /* InfoPlist.strings in Resources */,
 				E07D55DF281004930049386F /* LaunchScreen.storyboard in Resources */,
 				E0A0FECC2828C8510035386D /* GoogleService-Info.plist in Resources */,
+				E0B4BF662838F87D007DA85E /* logo_3x.png in Resources */,
 				E0A9D8882837E6780041637B /* logo_full.png in Resources */,
 				E0A9D86A28364ED20041637B /* Login.storyboard in Resources */,
 				E0A9D8852837E6780041637B /* back.jpg in Resources */,
+				E0B4BF602838EEEF007DA85E /* logo_full_white.png in Resources */,
 				E0A9D87B2837DCD70041637B /* apple.jpg in Resources */,
 				E0A9D8862837E6780041637B /* logo.png in Resources */,
 				E07D55DC281004930049386F /* Assets.xcassets in Resources */,
+				E0B4BF652838F87D007DA85E /* logo_2x.png in Resources */,
 				E0A9D8872837E6780041637B /* plusBtn.png in Resources */,
 				E07D55DA281004910049386F /* Main.storyboard in Resources */,
 				E0B4BF5C2838E951007DA85E /* logout.png in Resources */,
@@ -303,6 +323,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				E07D55D9281004910049386F /* Base */,
+				E0B4BF70283904AC007DA85E /* ko */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -311,8 +332,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				E07D55DE281004930049386F /* Base */,
+				E0B4BF6F283904AC007DA85E /* ko */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		E0B4BF6B2838FBF4007DA85E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E0B4BF6A2838FBF4007DA85E /* en */,
+				E0B4BF71283904B9007DA85E /* ko */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -322,6 +353,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -382,6 +414,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

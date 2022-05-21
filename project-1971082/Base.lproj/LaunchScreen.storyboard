@@ -19,13 +19,20 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="HbG-kn-C02">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_full_white.png" translatesAutoresizingMaskIntoConstraints="NO" id="t0G-E4-zv7">
+                                <rect key="frame" x="50" y="160.5" width="314" height="535.5"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="t0G-E4-zv7" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="0jQ-O6-0oX"/>
+                            <constraint firstItem="t0G-E4-zv7" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-20" id="BwO-ri-64D"/>
                             <constraint firstItem="HbG-kn-C02" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="FPJ-hd-GlV"/>
                             <constraint firstAttribute="trailing" secondItem="HbG-kn-C02" secondAttribute="trailing" id="NQo-JX-PhN"/>
+                            <constraint firstItem="t0G-E4-zv7" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="50" id="Qlg-Lg-fGa"/>
                             <constraint firstItem="HbG-kn-C02" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="UUy-uB-9Fd"/>
+                            <constraint firstAttribute="trailing" secondItem="t0G-E4-zv7" secondAttribute="trailing" constant="50" id="Wc7-kv-T3P"/>
                             <constraint firstAttribute="bottom" secondItem="HbG-kn-C02" secondAttribute="bottom" id="qcP-Lq-HEb"/>
                         </constraints>
                     </view>
@@ -37,6 +44,7 @@
     </scenes>
     <resources>
         <image name="back.jpg" width="828" height="1792"/>
+        <image name="logo_full_white.png" width="936.48321533203125" height="517.53021240234375"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
