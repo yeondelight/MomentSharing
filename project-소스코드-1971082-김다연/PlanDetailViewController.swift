@@ -309,6 +309,7 @@ extension PlanDetailViewController {
         self.datePicker.datePickerMode = .date
         self.datePicker.preferredDatePickerStyle = .wheels
         self.datePicker.backgroundColor = .white
+        self.datePicker.setDate(plan!.date, animated: false)
         self.datePicker.addTarget(self, action: #selector(datePickerValueDidChanged(_:)), for: .valueChanged)
         self.dateTextField.inputView = self.datePicker
         self.dateTextField.tintColor = .clear
