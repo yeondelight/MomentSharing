@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="wMN-Zx-4EV">
-                                <rect key="frame" x="4" y="101" width="406" height="757"/>
+                                <rect key="frame" x="4" y="136.5" width="406" height="721.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlainTableViewCell" rowHeight="82" id="aIN-hX-EgO">
@@ -106,18 +106,26 @@
                                     <action selector="addingPlans:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Yok-rH-GoE"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="2000년 00월 - 2000년 00월" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lS0-PP-vnq">
+                                <rect key="frame" x="16" y="109" width="190" height="19.5"/>
+                                <color key="textColor" red="0.97254901960784312" green="0.55294117647058827" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Pd7-wa-NRe" secondAttribute="bottom" constant="20" id="29V-qi-TU6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="wMN-Zx-4EV" secondAttribute="bottom" constant="4" id="GFr-3v-ges"/>
-                            <constraint firstItem="wMN-Zx-4EV" firstAttribute="top" secondItem="xyk-Bw-rof" secondAttribute="bottom" constant="4" id="Pad-0c-Khg"/>
+                            <constraint firstItem="lS0-PP-vnq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="GHt-Ow-WYv"/>
+                            <constraint firstItem="wMN-Zx-4EV" firstAttribute="top" secondItem="lS0-PP-vnq" secondAttribute="bottom" constant="8" id="Pad-0c-Khg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wMN-Zx-4EV" secondAttribute="trailing" constant="4" id="Tw3-Cd-Ebb"/>
                             <constraint firstItem="wMN-Zx-4EV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="Ydj-qY-Jll"/>
                             <constraint firstItem="xyk-Bw-rof" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="4" id="hyK-68-UmX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xyk-Bw-rof" secondAttribute="trailing" constant="4" id="nUJ-ay-uJC"/>
                             <constraint firstItem="xyk-Bw-rof" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="4" id="qYo-NN-qH6"/>
+                            <constraint firstItem="lS0-PP-vnq" firstAttribute="top" secondItem="xyk-Bw-rof" secondAttribute="bottom" constant="12" id="vnh-vV-tvk"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Pd7-wa-NRe" secondAttribute="trailing" constant="20" id="z4N-4U-qlC"/>
                         </constraints>
                     </view>
@@ -126,6 +134,7 @@
                         <outlet property="addPlanBottom" destination="29V-qi-TU6" id="SZl-Dy-dwZ"/>
                         <outlet property="addPlanBtn" destination="Pd7-wa-NRe" id="lH7-6S-np1"/>
                         <outlet property="addPlanTrailing" destination="z4N-4U-qlC" id="L0C-Nq-2iQ"/>
+                        <outlet property="dateTextField" destination="lS0-PP-vnq" id="C8g-ro-ovH"/>
                         <outlet property="planGroupTableView" destination="wMN-Zx-4EV" id="hlw-lO-tbG"/>
                         <segue destination="aIq-aJ-3Rn" kind="show" identifier="AddPlan" id="Lcg-Kk-B8c"/>
                     </connections>

@@ -36,9 +36,11 @@ class PlanGroup: NSObject{
 }
 
 extension PlanGroup{
-    func queryPlan(){
+    func queryPlan(from: Date, to: Date){
         plans.removeAll()
-        database.queryPlan()
+        fromDate = from.firstOfMonth().firstOfWeek()
+        toDate = to.lastOfMonth().lastOfWeek()
+        database.queryPlan(fromDate: fromDate!, toDate: toDate!)
     }
     
     func saveChange(plan: Plan, action: DbAction){

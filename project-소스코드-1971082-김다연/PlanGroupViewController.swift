@@ -11,12 +11,24 @@ import FirebaseAuth
 import FirebaseStorage
 
 class PlanGroupViewController: UIViewController {
+    
+    var availableYear: [Int] = []
+    var allMonth: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    var selectedStartYear = 0
+    var selectedStartMonth = 0
+    var selectedEndYear = 0
+    var selectedEndMonth = 0
+    var todayYear = "0"
+    var todayMonth = "0"
 
     @IBOutlet weak var planGroupTableView: UITableView!
     @IBOutlet weak var addPlanBtn: UIButton!
     
     @IBOutlet weak var addPlanTrailing: NSLayoutConstraint!
     @IBOutlet weak var addPlanBottom: NSLayoutConstraint!
+    
+    var datePicker = UIPickerView()
+    @IBOutlet weak var dateTextField: UITextField!
     
     var planGroup: PlanGroup!
     
@@ -25,17 +37,33 @@ class PlanGroupViewController: UIViewController {
         
         addPlanBtnCustom()
         barButtonCustom()
-        
+        configureDatePicker()
         
         planGroupTableView.dataSource = self        // 테이블뷰의 데이터 소스로 등록
         planGroupTableView.delegate = self        // 딜리게이터로 등록
 
         // 단순히 planGroup객체만 생성한다
         planGroup = PlanGroup(parentNotification: receivingNotification)
+        
+        // datePicker를 위한 tap gesture 설정
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+        
+        // tableViewCell의 tap을 무시하지 않도록 설정
+        tap.cancelsTouchesInView = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        planGroup.queryPlan()       // 데이터를 가져온다. 데이터가 오면 planGroupListener가 호출된다.
+        let startdate = stringToDate(string:"\(selectedStartYear)년 \(selectedStartMonth)월 1일")
+        let enddate = stringToDate(string: "\(selectedEndYear)년 \(selectedEndMonth)월 1일")
+        print("****************************")
+        print(startdate)
+        print(enddate)
+        planGroup.queryPlan(from: startdate!, to:enddate!)
+    }
+    
+    @objc func dismissKeyboard(sender:UITapGestureRecognizer) {
+        view.endEditing(true)
     }
     
     @objc func logout(){
@@ -190,12 +218,168 @@ extension PlanGroupViewController{
             // 빈 plan을 생성하여 전달한다
             // 이 때 Firebase에 저장하고 가야 사용자가 수정해도 저장된다.
             let newPlan = Plan(date:Date(), owner: Auth.auth().currentUser!.email!.components(separatedBy: "@")[0], withData: false)
-            planGroup.saveChange(plan: newPlan, action: .Add)
-            print("#######PLANGROUP#######")
-            print(planGroup)
             planDetailViewController.plan = newPlan
             planGroupTableView.selectRow(at: nil, animated: true, scrollPosition: .none)
         }
     }
 
+}
+
+// for datePicker(pickerView) - textField
+extension PlanGroupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func configureDatePicker(){
+        datePicker.delegate = self
+        datePicker.dataSource = self
+        datePicker.backgroundColor = .white
+        dateTextField.inputView = datePicker
+        dateTextField.tintColor = .clear
+        
+        setAvailableDate()
+    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 5
+    }
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        switch component {
+        case 0:
+            return availableYear.count
+        case 1:
+            return allMonth.count
+        case 2:
+            return 1
+        case 3:
+            return availableYear.count
+        case 4:
+            return allMonth.count
+        default:
+            return 0
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        switch component {
+        case 0:
+            return String(availableYear[row]) + "년"
+        case 1:
+            return String(allMonth[row]) + "월"
+        case 2:
+            return "-"
+        case 3:
+            return String(availableYear[row]) + "년"
+        case 4:
+            return String(allMonth[row]) + "월"
+        default:
+            return ""
+        }
+    }
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        switch component {
+        case 0:
+            selectedStartYear = availableYear[row]
+        case 1:
+            selectedStartMonth = allMonth[row]
+        case 3:
+            selectedEndYear = availableYear[row]
+        case 4:
+            selectedEndMonth = allMonth[row]
+        default:
+            break
+        }
+        
+        // 미래 연월 방지
+        if (Int(todayYear) == selectedStartYear && Int(todayMonth)! < selectedStartMonth) {
+            pickerView.selectRow(Int(todayMonth)!-1, inComponent: 1, animated: true)
+            selectedStartMonth = Int(todayMonth)!
+        }
+        if (Int(todayYear) == selectedEndYear && Int(todayMonth)! < selectedEndMonth) {
+            pickerView.selectRow(Int(todayMonth)!-1, inComponent: 4, animated: true)
+            selectedEndMonth = Int(todayMonth)!
+        }
+        
+        // 미래 < 과거 방지 : 년
+        if (selectedStartYear > selectedEndYear) {
+            pickerView.selectRow(selectedEndYear - 2000, inComponent: 0, animated: true)
+            selectedStartYear = selectedEndYear
+            // 월 다시 확인
+            if (self.datePicker.selectedRow(inComponent: 1) > self.datePicker.selectedRow(inComponent: 4)) {
+                pickerView.selectRow(selectedEndMonth - 1, inComponent: 1, animated: true)
+                selectedStartMonth = selectedEndMonth
+            }
+        }
+        
+        // 미래 < 과거 방지 : 월
+        if (selectedStartYear == selectedEndYear && selectedStartMonth > selectedEndMonth) {
+            pickerView.selectRow(selectedEndMonth - 1, inComponent: 1, animated: true)
+            selectedStartMonth = selectedEndMonth
+        }
+        
+        dateTextField.text = "\(selectedStartYear)년 \(selectedStartMonth)월  -  \(selectedEndYear)년 \(selectedEndMonth)월"
+        
+        let startdate = stringToDate(string: "\(selectedStartYear)년 \(selectedStartMonth)월 1일")
+        let enddate = stringToDate(string:"\(selectedEndYear)년 \(selectedEndMonth)월 1일")
+        print("****************************")
+        print(startdate)
+        print(enddate)
+        
+        // queryPlan
+        planGroup.queryPlan(from: startdate!, to:enddate!)
+    }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let view = UIView(frame: CGRect(x:0, y:0, width: 100, height: 60))
+        let subLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
+        subLabel.textAlignment = .center
+        subLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        switch component{
+        case 0:
+            subLabel.text = String(availableYear[row]) + "년"
+        case 1:
+            subLabel.text = String(allMonth[row]) + "월"
+        case 2:
+            subLabel.text = "-"
+        case 3:
+            subLabel.text = String(availableYear[row]) + "년"
+        case 4:
+            subLabel.text = String(allMonth[row]) + "월"
+        default:
+            subLabel.text = ""
+        }
+        view.addSubview(subLabel)
+        return view
+    }
+    func setAvailableDate() {
+        let formatterYear = DateFormatter()
+        formatterYear.dateFormat = "yyyy"
+        todayYear = formatterYear.string(from: Date())
+        
+        formatterYear.dateFormat="MM"
+        todayMonth = formatterYear.string(from: Date())
+        
+        for i in 2000...Int(todayYear)! {
+            availableYear.append(i)
+        }
+        
+        selectedStartYear = Int(todayYear)!
+        selectedStartMonth = Int(todayMonth)! - 2 > 0  ? Int(todayMonth)! - 2 : 1
+        selectedEndYear = Int(todayYear)!
+        selectedEndMonth = Int(todayMonth)!
+        dateTextField.text = "\(selectedStartYear)년 \(selectedStartMonth)월  -  \(selectedEndYear)년 \(selectedEndMonth)월"
+        
+        // pickerView 미리 변경
+        datePicker.selectRow(selectedStartYear - 2000, inComponent: 0, animated: false)
+        datePicker.selectRow(selectedStartMonth - 1, inComponent: 1, animated: false)
+        datePicker.selectRow(selectedEndYear - 2000, inComponent: 3, animated: false)
+        datePicker.selectRow(selectedEndMonth - 1, inComponent: 4, animated: false)
+    }
+    
+    func dateToString(date: Date) -> String! {
+        let formmater = DateFormatter()
+        formmater.dateFormat = "yyyy년 MM월 dd일"
+        formmater.locale = Locale(identifier: "ko_KR")
+        return formmater.string(from: date)
+    }
+    func stringToDate(string: String) -> Date! {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.date(from: string)
+    }
 }

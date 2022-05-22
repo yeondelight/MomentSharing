@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:/Users/hansung/Desktop/students/1971082/project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-1971082-&#x1100;&#x1175;&#x11b7;&#x1103;&#x1161;&#x110b;&#x1167;&#x11ab;/project-&#x1109;&#x1169;&#x1109;&#x1173;&#x110f;&#x1169;&#x1103;&#x1173;-1971082-&#x1100;&#x1175;&#x11b7;&#x1103;&#x1161;&#x110b;&#x1167;&#x11ab;.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+</Workspace>

@@ -44,7 +44,7 @@
 /* Begin PBXFileReference section */
 		44E271CDEC287197A5A680EE /* Pods-project-1971082.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-project-1971082.debug.xcconfig"; path = "Target Support Files/Pods-project-1971082/Pods-project-1971082.debug.xcconfig"; sourceTree = "<group>"; };
 		A42774958CCBAAC40829DBBC /* Pods_project_1971082.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_project_1971082.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E07D55CF281004910049386F /* project-1971082.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-1971082.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E07D55CF281004910049386F /* project-소스코드-1971082-김다연.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project-소스코드-1971082-김다연.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E07D55D2281004910049386F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E07D55D4281004910049386F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E07D55D6281004910049386F /* PlanGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGroupViewController.swift; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				E0B4BF6B2838FBF4007DA85E /* InfoPlist.strings */,
-				E07D55D1281004910049386F /* project-1971082 */,
+				E07D55D1281004910049386F /* project-소스코드-1971082-김다연 */,
 				E07D55D0281004910049386F /* Products */,
 				9BE25AD85EBA3C345AF3583E /* Pods */,
 				1863E6056664BF448EE9EC3A /* Frameworks */,
@@ -126,12 +126,12 @@
 		E07D55D0281004910049386F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E07D55CF281004910049386F /* project-1971082.app */,
+				E07D55CF281004910049386F /* project-소스코드-1971082-김다연.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E07D55D1281004910049386F /* project-1971082 */ = {
+		E07D55D1281004910049386F /* project-소스코드-1971082-김다연 */ = {
 			isa = PBXGroup;
 			children = (
 				E07D55DD281004930049386F /* LaunchScreen.storyboard */,
@@ -166,15 +166,15 @@
 				E0B4BF5B2838E951007DA85E /* logout.png */,
 				E0A9D8812837E6780041637B /* plusBtn.png */,
 			);
-			path = "project-1971082";
+			path = "project-소스코드-1971082-김다연";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E07D55CE281004910049386F /* project-1971082 */ = {
+		E07D55CE281004910049386F /* project-소스코드-1971082-김다연 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E07D55E3281004930049386F /* Build configuration list for PBXNativeTarget "project-1971082" */;
+			buildConfigurationList = E07D55E3281004930049386F /* Build configuration list for PBXNativeTarget "project-소스코드-1971082-김다연" */;
 			buildPhases = (
 				628D97B195A36549BAA8CB60 /* [CP] Check Pods Manifest.lock */,
 				E07D55CB281004910049386F /* Sources */,
@@ -186,9 +186,9 @@
 			);
 			dependencies = (
 			);
-			name = "project-1971082";
+			name = "project-소스코드-1971082-김다연";
 			productName = "ch09-1971082-tableView";
-			productReference = E07D55CF281004910049386F /* project-1971082.app */;
+			productReference = E07D55CF281004910049386F /* project-소스코드-1971082-김다연.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -206,7 +206,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E07D55CA281004910049386F /* Build configuration list for PBXProject "project-1971082" */;
+			buildConfigurationList = E07D55CA281004910049386F /* Build configuration list for PBXProject "project-소스코드-1971082-김다연" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -220,7 +220,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E07D55CE281004910049386F /* project-1971082 */,
+				E07D55CE281004910049386F /* project-소스코드-1971082-김다연 */,
 			);
 		};
 /* End PBXProject section */
@@ -474,7 +474,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "project-1971082/Info.plist";
+				INFOPLIST_FILE = "project-소스코드-1971082-김다연/Info.plist";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "공유 앨범을 만들기 위해 사진 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -502,7 +503,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "project-1971082/Info.plist";
+				INFOPLIST_FILE = "project-소스코드-1971082-김다연/Info.plist";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "공유 앨범을 만들기 위해 사진 접근 권한이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -524,7 +526,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E07D55CA281004910049386F /* Build configuration list for PBXProject "project-1971082" */ = {
+		E07D55CA281004910049386F /* Build configuration list for PBXProject "project-소스코드-1971082-김다연" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E07D55E1281004930049386F /* Debug */,
@@ -533,7 +535,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E07D55E3281004930049386F /* Build configuration list for PBXNativeTarget "project-1971082" */ = {
+		E07D55E3281004930049386F /* Build configuration list for PBXNativeTarget "project-소스코드-1971082-김다연" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E07D55E4281004930049386F /* Debug */,

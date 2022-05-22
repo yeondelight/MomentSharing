@@ -308,8 +308,10 @@ extension PlanDetailViewController {
     func configureDatePicker(){
         self.datePicker.datePickerMode = .date
         self.datePicker.preferredDatePickerStyle = .wheels
+        self.datePicker.backgroundColor = .white
         self.datePicker.addTarget(self, action: #selector(datePickerValueDidChanged(_:)), for: .valueChanged)
         self.dateTextField.inputView = self.datePicker
+        self.dateTextField.tintColor = .clear
     }
     @objc func datePickerValueDidChanged(_ datePicker: UIDatePicker){
         let formmater = DateFormatter()
