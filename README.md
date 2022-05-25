@@ -1,5 +1,3 @@
-# README
-
 # 일정과 사진 공유를 한번에, Moment Sharing
 from. 2022-1 iOS Term project
 
