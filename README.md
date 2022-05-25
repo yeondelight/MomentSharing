@@ -21,7 +21,7 @@ from. 2022-1 iOS Term project
 
 ## ⚙️ 시스템 구조
 
-![sysarch](presentation/sysArch.jpg)
+![sysarch](presentation/sysArch.png)
 
 <br/>
 <br/>
